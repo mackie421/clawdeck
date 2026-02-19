@@ -5,7 +5,7 @@
     "buildCommand": "bin/railway-build.sh"
   },
   "deploy": {
-    "startCommand": "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb",
+    "startCommand": "echo DATABASE_URL=$DATABASE_URL | head -c 40 && bundle exec rails db:migrate && bundle exec puma -C config/puma.rb",
     "healthcheckPath": "/up",
     "healthcheckTimeout": 120
   }
