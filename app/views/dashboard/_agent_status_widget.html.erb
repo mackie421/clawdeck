@@ -1,0 +1,58 @@
+<%# Agent Status Widget — Is the agent online? Last activity? %>
+<div class="bg-bg-surface border border-border rounded-lg">
+  <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+    <h2 class="text-sm font-semibold text-content font-display">Agent Status</h2>
+    <% if @agent_active %>
+      <span class="flex items-center gap-1.5 text-xs text-status-success">
+        <span class="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+        Online
+      </span>
+    <% else %>
+      <span class="flex items-center gap-1.5 text-xs text-content-muted">
+        <span class="w-1.5 h-1.5 rounded-full bg-content-muted"></span>
+        Offline
+      </span>
+    <% end %>
+  </div>
+
+  <div class="p-4">
+    <div class="flex items-center gap-3 mb-4">
+      <%# Agent avatar %>
+      <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center">
+        <span class="text-xl"><%= current_user.agent_emoji || "🦞" %></span>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-content"><%= current_user.agent_name || "Agent" %></p>
+        <% if current_user.agent_last_active_at.present? %>
+          <p class="text-xs text-content-muted">Last active <%= time_ago_in_words(current_user.agent_last_active_at) %> ago</p>
+        <% else %>
+          <p class="text-xs text-content-muted">Never connected</p>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Last activity %>
+    <% if @last_agent_activity.present? %>
+      <div class="bg-bg-elevated rounded-md p-3">
+        <p class="text-xs text-content-muted mb-1">Last action</p>
+        <div class="flex items-center gap-2">
+          <% icon_class = case @last_agent_activity.action
+            when "created" then "text-status-info"
+            when "moved" then "text-purple-400"
+            when "updated" then "text-status-warning"
+            else "text-content-secondary"
+          end %>
+          <span class="text-xs <%= icon_class %> font-medium capitalize"><%= @last_agent_activity.action %></span>
+          <span class="text-xs text-content-secondary truncate">
+            <%= @last_agent_activity.task&.name&.truncate(40) %>
+          </span>
+        </div>
+        <p class="text-[10px] text-content-muted mt-1"><%= time_ago_in_words(@last_agent_activity.created_at) %> ago</p>
+      </div>
+    <% else %>
+      <div class="bg-bg-elevated rounded-md p-3 text-center">
+        <p class="text-xs text-content-muted">No agent activity recorded yet</p>
+      </div>
+    <% end %>
+  </div>
+</div>

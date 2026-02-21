@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "uri"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -58,7 +59,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "clawdeck.io" }
+  default_host = ENV["APP_HOST"].presence || ENV["RAILWAY_PUBLIC_DOMAIN"].presence || "clawdeck.io"
+  default_host = URI.parse(default_host).host if default_host.include?("://")
+  default_host = default_host.split("/").first
+  config.action_mailer.default_url_options = { host: default_host, protocol: "https" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -71,21 +75,29 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    "clawdeck.io",           # Production domain
-    "www.clawdeck.io",       # WWW subdomain
-    "104.236.193.0",      # Server IP for direct access
-    IPAddr.new("127.0.0.1"),  # Localhost
-    IPAddr.new("::1")         # IPv6 localhost
-  ]
+  extra_hosts = ENV.fetch("ALLOWED_HOSTS", "")
+                   .split(",")
+                   .map { |host| host.strip.presence }
+                   .compact
 
-  # Allow Render and custom domain hosts
-  config.hosts << "clawdeck.onrender.com"
-  config.hosts << "app.clawdeck.io"
-  config.hosts << ".clawdeck.io"  # Allow all subdomains
+  app_host = ENV["APP_HOST"].presence
+  app_host = URI.parse(app_host).host if app_host&.include?("://")
+  app_host = app_host.split("/").first if app_host
 
-  # Allow Railway hosts
-  config.hosts << ".railway.app"
+  hosts = [
+    "clawdeck.io",
+    "www.clawdeck.io",
+    "clawdeck.onrender.com",
+    "app.clawdeck.io",
+    ".clawdeck.io",
+    ".railway.app",
+    ENV["RAILWAY_PUBLIC_DOMAIN"].presence,
+    app_host,
+    IPAddr.new("127.0.0.1"),
+    IPAddr.new("::1")
+  ].compact
+
+  config.hosts = (hosts + extra_hosts).uniq
   
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }

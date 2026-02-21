@@ -1,0 +1,38 @@
+<% content_for :title, "Dashboard - clawdeck" %>
+<% content_for :page_title, "Dashboard" %>
+
+<div class="p-6">
+  <%# Date + greeting %>
+  <div class="mb-6">
+    <p class="text-xs text-content-muted"><%= Date.current.strftime("%A, %B %-d") %></p>
+  </div>
+
+  <%# Widget grid: 2 columns on desktop, stacked on mobile %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <%# Left column %>
+    <div class="flex flex-col gap-4">
+      <%= turbo_frame_tag "agenda_widget" do %>
+        <%= render "dashboard/agenda_widget" %>
+      <% end %>
+
+      <%= turbo_frame_tag "priority_widget" do %>
+        <%= render "dashboard/priority_widget" %>
+      <% end %>
+
+      <%= turbo_frame_tag "agent_status_widget" do %>
+        <%= render "dashboard/agent_status_widget" %>
+      <% end %>
+    </div>
+
+    <%# Right column %>
+    <div class="flex flex-col gap-4">
+      <%= turbo_frame_tag "progress_widget" do %>
+        <%= render "dashboard/progress_widget" %>
+      <% end %>
+
+      <%= turbo_frame_tag "digest_widget" do %>
+        <%= render "dashboard/digest_widget" %>
+      <% end %>
+    </div>
+  </div>
+</div>

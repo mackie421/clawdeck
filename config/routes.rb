@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     post :regenerate_api_token
   end
 
+  # Dashboard (mission control)
+  get "dashboard", to: "dashboard#show", as: :dashboard
+
   # Boards (multi-board kanban views)
   resources :boards, only: [ :index, :show, :create, :update, :destroy ] do
     patch :update_task_status, on: :member

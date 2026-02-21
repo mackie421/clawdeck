@@ -1,4 +1,27 @@
 module ApplicationHelper
+  # Sidebar navigation link helper
+  # Renders an icon-only link (48px sidebar) with a tooltip for the label.
+  # `active:` highlights the current page, `disabled:` greys it out for future pages.
+  def sidebar_link(label, path, key, active: false, disabled: false, &block)
+    icon_html = capture(&block)
+
+    if disabled
+      content_tag(:div,
+        content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9"),
+        class: "flex items-center rounded-md text-content-muted/40 cursor-default",
+        title: "#{label} (coming soon)"
+      )
+    else
+      link_to(path,
+        class: "group flex items-center rounded-md transition-colors #{active ? 'bg-bg-elevated text-accent' : 'text-content-secondary hover:bg-bg-elevated hover:text-content'}",
+        title: label,
+        data: { turbo_frame: "_top" }
+      ) do
+        content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9")
+      end
+    end
+  end
+
   def activity_icon_bg(activity)
     case activity.action
     when "created"
