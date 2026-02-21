@@ -20,6 +20,10 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :metrics, only: [ :index, :show, :create, :update, :destroy ]
+
+      resources :research_entries, only: [ :index, :show, :create, :update, :destroy ]
+
       resources :tasks, only: [ :index, :show, :create, :update, :destroy ] do
         collection do
           get :next
@@ -58,6 +62,12 @@ Rails.application.routes.draw do
 
   # Activity Feed
   get "activity", to: "agent_events#show", as: :activity
+
+  # Analytics
+  resources :metrics, only: [ :index ]
+
+  # Research Hub
+  resources :research_entries, only: [ :index ]
 
   # Learnings Hub
   resources :learnings, only: [ :index, :update ] do

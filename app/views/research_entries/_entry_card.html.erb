@@ -1,0 +1,65 @@
+<div id="<%= dom_id(entry) %>" class="bg-bg-surface border border-border rounded-lg p-4">
+  <div class="flex items-start justify-between gap-3">
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs px-1.5 py-0.5 rounded font-medium
+          <%= case entry.research_type
+              when 'trend' then 'bg-teal-500/10 text-teal-400'
+              when 'deep_dive' then 'bg-indigo-500/10 text-indigo-400'
+              when 'competitor' then 'bg-red-500/10 text-red-400'
+              when 'market' then 'bg-amber-500/10 text-amber-400'
+              when 'general' then 'bg-gray-500/10 text-gray-400'
+              end %>">
+          <%= entry.research_type.titleize %>
+        </span>
+        <span class="text-xs px-1.5 py-0.5 rounded font-medium bg-bg-elevated text-content-secondary">
+          <%= entry.source.titleize %>
+        </span>
+        <% if entry.relevance_score.present? %>
+          <span class="text-xs px-1.5 py-0.5 rounded font-medium
+            <%= if entry.relevance_score >= 0.8
+                  'bg-green-500/10 text-green-400'
+                elsif entry.relevance_score >= 0.5
+                  'bg-yellow-500/10 text-yellow-400'
+                else
+                  'bg-gray-500/10 text-gray-400'
+                end %>">
+            <%= (entry.relevance_score * 100).round %>% relevant
+          </span>
+        <% end %>
+      </div>
+
+      <h3 class="text-sm font-medium text-content"><%= entry.title %></h3>
+
+      <% if entry.body.present? %>
+        <div class="mt-2 text-xs text-content-secondary prose-sm">
+          <%= simple_format(entry.body.truncate(300), class: "text-xs text-content-secondary leading-relaxed") %>
+        </div>
+      <% end %>
+
+      <div class="flex items-center gap-3 mt-2">
+        <% if entry.tags.present? && entry.tags.any? %>
+          <div class="flex items-center gap-1">
+            <% entry.tags.first(3).each do |tag| %>
+              <span class="text-xs px-1.5 py-0.5 rounded bg-bg-elevated text-content-muted"><%= tag %></span>
+            <% end %>
+            <% if entry.tags.size > 3 %>
+              <span class="text-xs text-content-muted">+<%= entry.tags.size - 3 %></span>
+            <% end %>
+          </div>
+        <% end %>
+        <span class="text-xs text-content-muted"><%= entry.created_at.strftime("%b %d, %Y %l:%M %p") %></span>
+      </div>
+    </div>
+  </div>
+
+  <%# Expandable full body %>
+  <% if entry.body.present? && entry.body.length > 300 %>
+    <details class="mt-3">
+      <summary class="text-xs text-accent cursor-pointer hover:text-accent-hover">Read full entry</summary>
+      <div class="mt-2 text-xs text-content-secondary leading-relaxed border-t border-border pt-3">
+        <%= simple_format(entry.body) %>
+      </div>
+    </details>
+  <% end %>
+</div>

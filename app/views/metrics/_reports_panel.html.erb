@@ -1,0 +1,80 @@
+<%# Reports: aggregated metric summaries %>
+<div class="space-y-4">
+  <%# Social metrics %>
+  <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-xs px-1.5 py-0.5 rounded font-medium bg-blue-500/10 text-blue-400">Social</span>
+      <h3 class="text-sm font-medium text-content">Social Metrics</h3>
+      <span class="ml-auto text-xs text-content-muted"><%= @social_metrics.size %> entries</span>
+    </div>
+    <% if @social_metrics.any? %>
+      <div class="space-y-2">
+        <% @social_metrics.each do |metric| %>
+          <div class="flex items-center justify-between py-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-content-secondary"><%= metric.name.titleize %></span>
+              <% if metric.platform.present? %>
+                <span class="text-xs text-content-muted">(<%= metric.platform.titleize %>)</span>
+              <% end %>
+            </div>
+            <span class="text-sm font-medium text-content"><%= number_with_delimiter(metric.value.to_f.round(2)) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-xs text-content-muted">No social metrics recorded</p>
+    <% end %>
+  </div>
+
+  <%# Content metrics %>
+  <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-xs px-1.5 py-0.5 rounded font-medium bg-purple-500/10 text-purple-400">Content</span>
+      <h3 class="text-sm font-medium text-content">Content Metrics</h3>
+      <span class="ml-auto text-xs text-content-muted"><%= @content_metrics.size %> entries</span>
+    </div>
+    <% if @content_metrics.any? %>
+      <div class="space-y-2">
+        <% @content_metrics.each do |metric| %>
+          <div class="flex items-center justify-between py-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-content-secondary"><%= metric.name.titleize %></span>
+              <% if metric.platform.present? %>
+                <span class="text-xs text-content-muted">(<%= metric.platform.titleize %>)</span>
+              <% end %>
+            </div>
+            <span class="text-sm font-medium text-content"><%= number_with_delimiter(metric.value.to_f.round(2)) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-xs text-content-muted">No content metrics recorded</p>
+    <% end %>
+  </div>
+
+  <%# Business metrics %>
+  <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-xs px-1.5 py-0.5 rounded font-medium bg-green-500/10 text-green-400">Business</span>
+      <h3 class="text-sm font-medium text-content">Business Metrics</h3>
+      <span class="ml-auto text-xs text-content-muted"><%= @business_metrics.size %> entries</span>
+    </div>
+    <% if @business_metrics.any? %>
+      <div class="space-y-2">
+        <% @business_metrics.each do |metric| %>
+          <div class="flex items-center justify-between py-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-content-secondary"><%= metric.name.titleize %></span>
+              <% if metric.platform.present? %>
+                <span class="text-xs text-content-muted">(<%= metric.platform.titleize %>)</span>
+              <% end %>
+            </div>
+            <span class="text-sm font-medium text-content"><%= number_with_delimiter(metric.value.to_f.round(2)) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-xs text-content-muted">No business metrics recorded</p>
+    <% end %>
+  </div>
+</div>

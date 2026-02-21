@@ -1,0 +1,74 @@
+<%# Overview Cards: latest values for tracked metrics %>
+<% if @latest_by_name.any? %>
+  <%# Summary cards %>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Total Metrics</p>
+      <p class="text-2xl font-semibold text-content mt-1"><%= @total_metrics %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Platforms</p>
+      <p class="text-2xl font-semibold text-content mt-1"><%= @platforms_tracked.size %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Categories</p>
+      <p class="text-2xl font-semibold text-content mt-1"><%= @categories_tracked.size %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Last Updated</p>
+      <p class="text-2xl font-semibold text-content mt-1"><%= @latest_by_name.first&.created_at&.strftime("%b %d") || "—" %></p>
+    </div>
+  </div>
+
+  <%# Latest metric values %>
+  <h3 class="text-sm font-medium text-content-secondary mb-3">Latest Values</h3>
+  <div class="space-y-3">
+    <% @latest_by_name.each do |metric| %>
+      <div class="bg-bg-surface border border-border rounded-lg p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs px-1.5 py-0.5 rounded font-medium
+                <%= case metric.category
+                    when 'social' then 'bg-blue-500/10 text-blue-400'
+                    when 'content' then 'bg-purple-500/10 text-purple-400'
+                    when 'business' then 'bg-green-500/10 text-green-400'
+                    when 'custom' then 'bg-orange-500/10 text-orange-400'
+                    end %>">
+                <%= metric.category.titleize %>
+              </span>
+              <% if metric.platform.present? %>
+                <span class="text-xs px-1.5 py-0.5 rounded font-medium bg-bg-elevated text-content-secondary">
+                  <%= metric.platform.titleize %>
+                </span>
+              <% end %>
+            </div>
+            <h4 class="text-sm font-medium text-content"><%= metric.name.titleize %></h4>
+            <p class="text-xs text-content-muted mt-1">
+              Source: <%= metric.source.titleize %> &middot;
+              <%= metric.created_at.strftime("%b %d, %Y %l:%M %p") %>
+            </p>
+          </div>
+          <div class="flex-shrink-0 text-right">
+            <p class="text-lg font-semibold text-content"><%= number_with_delimiter(metric.value.to_f.round(2)) %></p>
+            <% if metric.period_start.present? && metric.period_end.present? %>
+              <p class="text-xs text-content-muted">
+                <%= metric.period_start.strftime("%b %d") %> – <%= metric.period_end.strftime("%b %d") %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-12">
+    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+      </svg>
+    </div>
+    <p class="text-sm text-content-muted">No metrics recorded yet</p>
+    <p class="text-xs text-content-muted/60 mt-1">Metrics from Larry Analytics will appear here</p>
+  </div>
+<% end %>

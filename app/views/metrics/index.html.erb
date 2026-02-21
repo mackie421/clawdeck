@@ -1,0 +1,38 @@
+<% content_for :title, "Analytics - clawdeck" %>
+<% content_for :page_title, "Analytics" %>
+
+<div class="p-6" data-controller="analytics">
+  <%# Tab navigation %>
+  <div class="flex items-center gap-1 mb-6 border-b border-border">
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+            data-tab="overview"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
+      Overview
+    </button>
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+            data-tab="charts"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Charts
+    </button>
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+            data-tab="reports"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Reports
+    </button>
+  </div>
+
+  <%# Overview panel %>
+  <div data-analytics-target="panel" data-panel="overview">
+    <%= render "metrics/overview_panel" %>
+  </div>
+
+  <%# Charts panel %>
+  <div data-analytics-target="panel" data-panel="charts" class="hidden">
+    <%= render "metrics/charts_panel" %>
+  </div>
+
+  <%# Reports panel %>
+  <div data-analytics-target="panel" data-panel="reports" class="hidden">
+    <%= render "metrics/reports_panel" %>
+  </div>
+</div>

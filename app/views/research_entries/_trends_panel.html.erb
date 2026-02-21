@@ -1,0 +1,17 @@
+<% if @trends.any? %>
+  <div class="space-y-3">
+    <% @trends.each do |entry| %>
+      <%= render "research_entries/entry_card", entry: entry %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-12">
+    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+      </svg>
+    </div>
+    <p class="text-sm text-content-muted">No trend research yet</p>
+    <p class="text-xs text-content-muted/60 mt-1">Trend analysis from research skills will appear here</p>
+  </div>
+<% end %>

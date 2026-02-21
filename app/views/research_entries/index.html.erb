@@ -1,0 +1,57 @@
+<% content_for :title, "Research Hub - clawdeck" %>
+<% content_for :page_title, "Research Hub" %>
+
+<div class="p-6" data-controller="research-hub">
+  <%# Tab navigation %>
+  <div class="flex items-center gap-1 mb-6 border-b border-border">
+    <button data-research-hub-target="tab" data-action="click->research-hub#switchTab"
+            data-tab="latest"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
+      Latest
+      <% if @latest.any? %>
+        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @latest.size %></span>
+      <% end %>
+    </button>
+    <button data-research-hub-target="tab" data-action="click->research-hub#switchTab"
+            data-tab="topics"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      By Topic
+    </button>
+    <button data-research-hub-target="tab" data-action="click->research-hub#switchTab"
+            data-tab="trends"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Trends
+      <% if @trends.any? %>
+        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @trends.size %></span>
+      <% end %>
+    </button>
+    <button data-research-hub-target="tab" data-action="click->research-hub#switchTab"
+            data-tab="deep_dives"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Deep Dives
+      <% if @deep_dives.any? %>
+        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @deep_dives.size %></span>
+      <% end %>
+    </button>
+  </div>
+
+  <%# Latest panel %>
+  <div data-research-hub-target="panel" data-panel="latest">
+    <%= render "research_entries/latest_panel" %>
+  </div>
+
+  <%# By Topic panel %>
+  <div data-research-hub-target="panel" data-panel="topics" class="hidden">
+    <%= render "research_entries/topics_panel" %>
+  </div>
+
+  <%# Trends panel %>
+  <div data-research-hub-target="panel" data-panel="trends" class="hidden">
+    <%= render "research_entries/trends_panel" %>
+  </div>
+
+  <%# Deep Dives panel %>
+  <div data-research-hub-target="panel" data-panel="deep_dives" class="hidden">
+    <%= render "research_entries/deep_dives_panel" %>
+  </div>
+</div>
