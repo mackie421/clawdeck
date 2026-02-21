@@ -24,6 +24,18 @@ Rails.application.routes.draw do
 
       resources :research_entries, only: [ :index, :show, :create, :update, :destroy ]
 
+      resources :cost_entries, only: [ :index, :show, :create, :update, :destroy ] do
+        collection do
+          get :summary
+        end
+      end
+
+      resources :health_snapshots, only: [ :index, :create ] do
+        collection do
+          get :history
+        end
+      end
+
       resources :tasks, only: [ :index, :show, :create, :update, :destroy ] do
         collection do
           get :next
@@ -68,6 +80,12 @@ Rails.application.routes.draw do
 
   # Research Hub
   resources :research_entries, only: [ :index ]
+
+  # Cost Tracker
+  resources :cost_entries, only: [ :index ]
+
+  # System Health
+  resources :health_snapshots, only: [ :index ]
 
   # Learnings Hub
   resources :learnings, only: [ :index, :update ] do

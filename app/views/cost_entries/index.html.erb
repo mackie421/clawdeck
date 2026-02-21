@@ -1,0 +1,38 @@
+<% content_for :title, "Cost Tracker - clawdeck" %>
+<% content_for :page_title, "Cost Tracker" %>
+
+<div class="p-6" data-controller="costs">
+  <%# Tab navigation %>
+  <div class="flex items-center gap-1 mb-6 border-b border-border">
+    <button data-costs-target="tab" data-action="click->costs#switchTab"
+            data-tab="spend"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
+      Spend Overview
+    </button>
+    <button data-costs-target="tab" data-action="click->costs#switchTab"
+            data-tab="history"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Daily History
+    </button>
+    <button data-costs-target="tab" data-action="click->costs#switchTab"
+            data-tab="budget"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+      Budget
+    </button>
+  </div>
+
+  <%# Spend Overview panel %>
+  <div data-costs-target="panel" data-panel="spend">
+    <%= render "cost_entries/spend_cards_panel" %>
+  </div>
+
+  <%# Daily History panel %>
+  <div data-costs-target="panel" data-panel="history" class="hidden">
+    <%= render "cost_entries/history_panel" %>
+  </div>
+
+  <%# Budget panel %>
+  <div data-costs-target="panel" data-panel="budget" class="hidden">
+    <%= render "cost_entries/budget_panel" %>
+  </div>
+</div>

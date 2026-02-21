@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :agent_events, dependent: :destroy
   has_many :metrics, dependent: :destroy
   has_many :research_entries, dependent: :destroy
+  has_many :cost_entries, dependent: :destroy
+  has_many :health_snapshots, dependent: :destroy
   has_one_attached :avatar
 
   # Primary API token for agent integration

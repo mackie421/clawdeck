@@ -1,0 +1,88 @@
+<%# Resource Usage + Uptime %>
+<% if @latest %>
+  <%# Resource Usage Cards %>
+  <h3 class="text-sm font-medium text-content-secondary mb-3">Resource Usage</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+    <%# Disk %>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Disk Usage</p>
+      <p class="text-2xl font-semibold text-content">
+        <%= @latest.disk_usage_pct ? "#{@latest.disk_usage_pct.to_f.round(1)}%" : "—" %>
+      </p>
+      <% if @latest.disk_usage_pct %>
+        <div class="h-2 bg-bg-elevated rounded-full overflow-hidden mt-2">
+          <% disk_color = @latest.disk_usage_pct.to_f > 90 ? "bg-red-500" : @latest.disk_usage_pct.to_f > 70 ? "bg-yellow-500" : "bg-green-500" %>
+          <div class="h-full <%= disk_color %> rounded-full transition-all" style="width: <%= @latest.disk_usage_pct.to_f.round(1) %>%"></div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Memory %>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Memory Usage</p>
+      <p class="text-2xl font-semibold text-content">
+        <%= @latest.memory_usage_pct ? "#{@latest.memory_usage_pct.to_f.round(1)}%" : "—" %>
+      </p>
+      <% if @latest.memory_usage_pct %>
+        <div class="h-2 bg-bg-elevated rounded-full overflow-hidden mt-2">
+          <% mem_color = @latest.memory_usage_pct.to_f > 90 ? "bg-red-500" : @latest.memory_usage_pct.to_f > 70 ? "bg-yellow-500" : "bg-green-500" %>
+          <div class="h-full <%= mem_color %> rounded-full transition-all" style="width: <%= @latest.memory_usage_pct.to_f.round(1) %>%"></div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# CPU %>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide mb-2">CPU Load</p>
+      <p class="text-2xl font-semibold text-content">
+        <%= @latest.cpu_load ? @latest.cpu_load.to_f.round(2) : "—" %>
+      </p>
+    </div>
+  </div>
+
+  <%# 24-hour resource trend (SVG sparklines) %>
+  <% if @history_24h.size > 1 %>
+    <h3 class="text-sm font-medium text-content-secondary mb-3">24-Hour Trend</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <%# Disk trend %>
+      <% disk_values = @history_24h.map { |s| s.disk_usage_pct&.to_f || 0 } %>
+      <% if disk_values.any? { |v| v > 0 } %>
+        <div class="bg-bg-surface border border-border rounded-lg p-4">
+          <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Disk Usage Trend</p>
+          <svg viewBox="0 0 200 50" class="w-full h-12" preserveAspectRatio="none">
+            <% max_val = [disk_values.max, 1].max %>
+            <% points = disk_values.each_with_index.map { |v, i| "#{(i.to_f / [disk_values.size - 1, 1].max * 200).round(1)},#{(50 - v / max_val * 45).round(1)}" }.join(" ") %>
+            <polyline points="<%= points %>" fill="none" stroke="rgb(59, 130, 246)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      <% end %>
+
+      <%# Memory trend %>
+      <% mem_values = @history_24h.map { |s| s.memory_usage_pct&.to_f || 0 } %>
+      <% if mem_values.any? { |v| v > 0 } %>
+        <div class="bg-bg-surface border border-border rounded-lg p-4">
+          <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Memory Usage Trend</p>
+          <svg viewBox="0 0 200 50" class="w-full h-12" preserveAspectRatio="none">
+            <% max_val = [mem_values.max, 1].max %>
+            <% points = mem_values.each_with_index.map { |v, i| "#{(i.to_f / [mem_values.size - 1, 1].max * 200).round(1)},#{(50 - v / max_val * 45).round(1)}" }.join(" ") %>
+            <polyline points="<%= points %>" fill="none" stroke="rgb(168, 85, 247)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p class="text-xs text-content-muted mt-4">
+    Total snapshots recorded: <%= @total_snapshots %>
+  </p>
+<% else %>
+  <div class="text-center py-12">
+    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008ZM6.75 8.25h.008v.008H6.75V8.25Zm0 6h.008v.008H6.75v-.008Z" />
+      </svg>
+    </div>
+    <p class="text-sm text-content-muted">No resource data yet</p>
+    <p class="text-xs text-content-muted/60 mt-1">Heartbeat snapshots will populate resource usage</p>
+  </div>
+<% end %>

@@ -1,0 +1,70 @@
+<%# Spend Cards %>
+<% if @total_entries > 0 %>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Today</p>
+      <p class="text-2xl font-semibold text-content mt-1">$<%= sprintf("%.4f", @today_total) %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">This Week</p>
+      <p class="text-2xl font-semibold text-content mt-1">$<%= sprintf("%.4f", @week_total) %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">This Month</p>
+      <p class="text-2xl font-semibold text-content mt-1">$<%= sprintf("%.4f", @month_total) %></p>
+    </div>
+    <div class="bg-bg-surface border border-border rounded-lg p-4">
+      <p class="text-xs text-content-muted uppercase tracking-wide">Projected Monthly</p>
+      <p class="text-2xl font-semibold text-content mt-1">$<%= sprintf("%.4f", @projected_monthly) %></p>
+    </div>
+  </div>
+
+  <%# By Model Chart %>
+  <% if @by_model.any? %>
+    <h3 class="text-sm font-medium text-content-secondary mb-3">Spend by Model (This Month)</h3>
+    <div class="space-y-2 mb-6">
+      <% max_model = @by_model.values.max || 1 %>
+      <% @by_model.sort_by { |_, v| -v }.each do |model, cost| %>
+        <div class="bg-bg-surface border border-border rounded-lg p-3">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-sm font-medium text-content"><%= model %></span>
+            <span class="text-sm text-content-muted">$<%= sprintf("%.4f", cost) %></span>
+          </div>
+          <div class="h-2 bg-bg-elevated rounded-full overflow-hidden">
+            <div class="h-full bg-accent rounded-full transition-all" style="width: <%= (cost / max_model * 100).round(1) %>%"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# By Agent Chart %>
+  <% if @by_agent.any? %>
+    <h3 class="text-sm font-medium text-content-secondary mb-3">Spend by Agent (This Month)</h3>
+    <div class="space-y-2">
+      <% max_agent = @by_agent.values.max || 1 %>
+      <% agent_colors = { "main" => "bg-blue-500", "digest" => "bg-purple-500", "larry" => "bg-green-500" } %>
+      <% @by_agent.sort_by { |_, v| -v }.each do |agent, cost| %>
+        <div class="bg-bg-surface border border-border rounded-lg p-3">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-sm font-medium text-content"><%= agent.titleize %></span>
+            <span class="text-sm text-content-muted">$<%= sprintf("%.4f", cost) %></span>
+          </div>
+          <div class="h-2 bg-bg-elevated rounded-full overflow-hidden">
+            <div class="h-full <%= agent_colors[agent] || 'bg-accent' %> rounded-full transition-all" style="width: <%= (cost / max_agent * 100).round(1) %>%"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center py-12">
+    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    </div>
+    <p class="text-sm text-content-muted">No cost entries recorded yet</p>
+    <p class="text-xs text-content-muted/60 mt-1">Agent telemetry will post cost data here</p>
+  </div>
+<% end %>
