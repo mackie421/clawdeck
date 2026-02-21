@@ -1,0 +1,57 @@
+<%# Week navigation %>
+<div class="flex items-center justify-between mb-4">
+  <a href="<%= contents_path(week_start: @week_start - 7.days) %>"
+     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-bg-elevated">
+    <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+    </svg>
+    Prev
+  </a>
+  <span class="text-sm font-medium text-content">
+    <%= @week_start.strftime("%b %-d") %> &mdash; <%= @week_end.strftime("%b %-d, %Y") %>
+  </span>
+  <a href="<%= contents_path(week_start: @week_start + 7.days) %>"
+     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-bg-elevated">
+    Next
+    <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+    </svg>
+  </a>
+</div>
+
+<%# Week grid %>
+<div class="grid grid-cols-7 gap-px bg-border rounded-lg overflow-hidden">
+  <%# Day headers %>
+  <% (@week_start..@week_end).each do |day| %>
+    <div class="bg-bg-surface px-2 py-2 text-center">
+      <p class="text-xs text-content-muted"><%= day.strftime("%a") %></p>
+      <p class="text-sm font-medium <%= day == Date.current ? 'text-accent' : 'text-content' %>"><%= day.day %></p>
+    </div>
+  <% end %>
+
+  <%# Day cells with content %>
+  <% (@week_start..@week_end).each do |day| %>
+    <div class="bg-bg-surface min-h-[100px] px-2 py-2">
+      <% day_contents = @calendar_contents.select { |c|
+        (c.scheduled_at&.to_date == day) || (c.published_at&.to_date == day)
+      } %>
+      <% day_contents.each do |content| %>
+        <div class="mb-1 px-1.5 py-1 rounded text-xs truncate
+          <%= case content.status
+              when 'scheduled' then 'bg-blue-500/10 text-blue-400'
+              when 'published' then 'bg-green-500/10 text-green-400'
+              end %>"
+             title="<%= content.title %> (<%= content.platform.titleize %>)">
+          <span class="font-medium"><%= platform_emoji(content.platform) %></span>
+          <%= content.title.truncate(20) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% if @calendar_contents.empty? %>
+  <div class="text-center py-8 mt-4">
+    <p class="text-sm text-content-muted">No scheduled or published content this week</p>
+  </div>
+<% end %>

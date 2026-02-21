@@ -22,6 +22,19 @@ module ApplicationHelper
     end
   end
 
+  def platform_emoji(platform)
+    case platform.to_s
+    when "x" then "𝕏"
+    when "instagram" then "📸"
+    when "linkedin" then "💼"
+    when "threads" then "🧵"
+    when "youtube" then "▶️"
+    when "email_newsletter" then "📧"
+    when "general" then "📝"
+    else "📄"
+    end
+  end
+
   def activity_icon_bg(activity)
     case activity.action
     when "created"

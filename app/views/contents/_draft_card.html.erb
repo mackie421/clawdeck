@@ -1,0 +1,62 @@
+<%# Individual draft content card with approve/reject/archive actions %>
+<div id="<%= dom_id(content) %>" class="bg-bg-surface border border-border rounded-lg p-4">
+  <div class="flex items-start justify-between gap-3">
+    <div class="flex-1 min-w-0">
+      <%# Status + platform badges %>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs px-1.5 py-0.5 rounded font-medium
+          <%= case content.status
+              when 'draft' then 'bg-yellow-500/10 text-yellow-500'
+              when 'review' then 'bg-blue-500/10 text-blue-500'
+              when 'approved' then 'bg-green-500/10 text-green-500'
+              end %>">
+          <%= content.status.capitalize %>
+        </span>
+        <span class="text-xs text-content-muted"><%= content.platform.titleize %></span>
+        <span class="text-xs text-content-muted"><%= content.content_type.titleize %></span>
+      </div>
+
+      <%# Title %>
+      <h3 class="text-sm font-medium text-content truncate"><%= content.title %></h3>
+
+      <%# Body preview %>
+      <% if content.body.present? %>
+        <p class="text-xs text-content-secondary mt-1 line-clamp-2"><%= content.body.truncate(200) %></p>
+      <% end %>
+
+      <%# Tags %>
+      <% if content.tags.present? && content.tags.any? %>
+        <div class="flex items-center gap-1 mt-2">
+          <% content.tags.each do |tag| %>
+            <span class="text-xs bg-bg-elevated text-content-muted px-1.5 py-0.5 rounded"><%= tag %></span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%# Meta info %>
+      <div class="flex items-center gap-3 mt-2">
+        <span class="text-xs text-content-muted"><%= time_ago_in_words(content.created_at) %> ago</span>
+        <% if content.source_larry_content? %>
+          <span class="text-xs text-content-muted">via Larry</span>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Action buttons %>
+    <div class="flex items-center gap-1 flex-shrink-0">
+      <% if content.status != "approved" %>
+        <%= form_with url: content_path(content), method: :patch, class: "inline" do |f| %>
+          <input type="hidden" name="content[status]" value="approved">
+          <%= f.submit "Approve",
+            class: "text-xs px-2.5 py-1.5 rounded-md bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-colors cursor-pointer" %>
+        <% end %>
+      <% end %>
+
+      <%= form_with url: content_path(content), method: :patch, class: "inline" do |f| %>
+        <input type="hidden" name="content[status]" value="archived">
+        <%= f.submit "Archive",
+          class: "text-xs px-2.5 py-1.5 rounded-md bg-bg-elevated text-content-muted hover:bg-bg-hover transition-colors cursor-pointer" %>
+      <% end %>
+    </div>
+  </div>
+</div>

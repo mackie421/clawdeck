@@ -24,6 +24,12 @@ class DashboardController < ApplicationController
       .reorder(priority: :desc, created_at: :asc)
       .limit(5)
 
+    # Overnight Digest: latest content entries (last 24 hours)
+    @digest_contents = current_user.contents
+      .where("created_at >= ?", 24.hours.ago)
+      .order(created_at: :desc)
+      .limit(5)
+
     # Agent Status: latest agent activity
     @agent_active = current_user.agent_last_active_at.present? && current_user.agent_last_active_at > 5.minutes.ago
     @last_agent_activity = TaskActivity

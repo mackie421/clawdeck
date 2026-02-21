@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
       resources :boards, only: [ :index, :show, :create, :update, :destroy ]
 
+      resources :contents, only: [ :index, :show, :create, :update, :destroy ]
+
       resources :tasks, only: [ :index, :show, :create, :update, :destroy ] do
         collection do
           get :next
@@ -38,6 +40,9 @@ Rails.application.routes.draw do
 
   # Dashboard (mission control)
   get "dashboard", to: "dashboard#show", as: :dashboard
+
+  # Content Studio
+  resources :contents, only: [ :index, :create, :update ]
 
   # Boards (multi-board kanban views)
   resources :boards, only: [ :index, :show, :create, :update, :destroy ] do
