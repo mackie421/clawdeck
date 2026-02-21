@@ -8,6 +8,12 @@ Rails.application.routes.draw do
 
       resources :contents, only: [ :index, :show, :create, :update, :destroy ]
 
+      resources :learnings, only: [ :index, :show, :create, :update, :destroy ] do
+        collection do
+          get :patterns
+        end
+      end
+
       resources :tasks, only: [ :index, :show, :create, :update, :destroy ] do
         collection do
           get :next
@@ -43,6 +49,13 @@ Rails.application.routes.draw do
 
   # Content Studio
   resources :contents, only: [ :index, :create, :update ]
+
+  # Learnings Hub
+  resources :learnings, only: [ :index, :update ] do
+    member do
+      post :create_rule
+    end
+  end
 
   # Boards (multi-board kanban views)
   resources :boards, only: [ :index, :show, :create, :update, :destroy ] do

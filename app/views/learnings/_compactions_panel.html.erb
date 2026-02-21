@@ -1,0 +1,54 @@
+<% if @compactions.any? %>
+  <div class="space-y-3">
+    <% @compactions.each do |learning| %>
+      <div id="<%= dom_id(learning) %>" class="bg-bg-surface border border-border rounded-lg p-4">
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center">
+            <svg class="w-4 h-4 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="text-sm font-medium text-content"><%= learning.title %></h3>
+              <span class="text-xs text-content-muted"><%= learning.created_at.strftime("%b %-d, %Y at %-I:%M%P") %></span>
+            </div>
+            <% if learning.body.present? %>
+              <p class="text-xs text-content-secondary mt-1"><%= learning.body.truncate(300) %></p>
+            <% end %>
+            <% if learning.metadata.present? %>
+              <div class="flex items-center gap-4 mt-2">
+                <% if learning.metadata["tokens_before"].present? %>
+                  <span class="text-xs text-content-muted">
+                    Before: <span class="text-content-secondary font-medium"><%= number_with_delimiter(learning.metadata["tokens_before"]) %></span> tokens
+                  </span>
+                <% end %>
+                <% if learning.metadata["tokens_after"].present? %>
+                  <span class="text-xs text-content-muted">
+                    After: <span class="text-content-secondary font-medium"><%= number_with_delimiter(learning.metadata["tokens_after"]) %></span> tokens
+                  </span>
+                <% end %>
+                <% if learning.metadata["tokens_before"].present? && learning.metadata["tokens_after"].present? %>
+                  <% saved = learning.metadata["tokens_before"].to_i - learning.metadata["tokens_after"].to_i %>
+                  <span class="text-xs font-medium <%= saved > 0 ? 'text-green-500' : 'text-content-muted' %>">
+                    <%= saved > 0 ? "−#{number_with_delimiter(saved)}" : "+#{number_with_delimiter(saved.abs)}" %> tokens
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-12">
+    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+      </svg>
+    </div>
+    <p class="text-sm text-content-muted">No compactions yet</p>
+    <p class="text-xs text-content-muted/60 mt-1">Memory compaction events will appear here with before/after token counts</p>
+  </div>
+<% end %>
