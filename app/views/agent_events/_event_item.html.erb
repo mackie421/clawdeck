@@ -1,0 +1,61 @@
+<%# Single event row — used in Live Feed and Turbo Stream prepends %>
+<div id="event_<%= event.id %>" class="flex items-start gap-3 px-4 py-3 border-b border-border last:border-b-0 hover:bg-bg-elevated/30 transition-colors">
+  <%# Agent emoji %>
+  <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center text-sm">
+    <%= event.agent_emoji || "🤖" %>
+  </div>
+
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center gap-2 flex-wrap">
+      <%# Event type badge %>
+      <span class="text-xs px-1.5 py-0.5 rounded font-medium
+        <%= case event.event_type
+            when 'task_claimed' then 'bg-blue-500/10 text-blue-400'
+            when 'task_completed' then 'bg-green-500/10 text-green-400'
+            when 'tool_call' then 'bg-purple-500/10 text-purple-400'
+            when 'message_sent' then 'bg-cyan-500/10 text-cyan-400'
+            when 'error' then 'bg-red-500/10 text-red-400'
+            when 'session_start' then 'bg-green-500/10 text-green-500'
+            when 'session_end' then 'bg-gray-500/10 text-gray-400'
+            when 'cron_run' then 'bg-orange-500/10 text-orange-400'
+            else 'bg-bg-elevated text-content-muted'
+            end %>">
+        <%= event.event_type.titleize %>
+      </span>
+
+      <%# Severity indicator %>
+      <% if event.severity_warning? || event.severity_error? %>
+        <span class="text-xs px-1.5 py-0.5 rounded font-medium
+          <%= event.severity_error? ? 'bg-red-500/10 text-red-400' : 'bg-yellow-500/10 text-yellow-500' %>">
+          <%= event.severity.capitalize %>
+        </span>
+      <% end %>
+
+      <%# Agent name %>
+      <span class="text-xs text-content-muted"><%= event.agent_name || "Agent" %></span>
+
+      <%# Timestamp %>
+      <span class="text-xs text-content-muted ml-auto flex-shrink-0"><%= time_ago_in_words(event.created_at) %> ago</span>
+    </div>
+
+    <%# Summary %>
+    <% if event.summary.present? %>
+      <p class="text-sm text-content mt-0.5"><%= event.summary %></p>
+    <% end %>
+
+    <%# Details preview %>
+    <% if event.details.present? && event.details.any? %>
+      <div class="flex items-center gap-3 mt-1">
+        <% if event.details["duration_ms"].present? %>
+          <span class="text-xs text-content-muted"><%= event.details["duration_ms"] %>ms</span>
+        <% end %>
+        <% if event.details["tool"].present? %>
+          <span class="text-xs text-content-muted">Tool: <%= event.details["tool"] %></span>
+        <% end %>
+        <% if event.details["task_id"].present? %>
+          <span class="text-xs text-content-muted">Task #<%= event.details["task_id"] %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

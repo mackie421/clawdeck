@@ -30,13 +30,21 @@ class DashboardController < ApplicationController
       .order(created_at: :desc)
       .limit(5)
 
-    # Agent Status: latest agent activity
+    # Agent Status: use agent_events if available, fall back to task_activities
     @agent_active = current_user.agent_last_active_at.present? && current_user.agent_last_active_at > 5.minutes.ago
-    @last_agent_activity = TaskActivity
-      .joins(:task)
-      .where(tasks: { user_id: current_user.id }, source: "api")
-      .order(created_at: :desc)
-      .first
+    @last_agent_event = current_user.agent_events.recent.first
+    @agent_in_session = @last_agent_event.present? &&
+      @last_agent_event.event_type_session_start? &&
+      !current_user.agent_events.where(session_id: @last_agent_event.session_id, event_type: :session_end).exists?
+
+    # Fall back to task_activities if no agent_events exist
+    @last_agent_activity = if @last_agent_event.nil?
+      TaskActivity
+        .joins(:task)
+        .where(tasks: { user_id: current_user.id }, source: "api")
+        .order(created_at: :desc)
+        .first
+    end
   end
 
   private

@@ -1,0 +1,49 @@
+<% content_for :title, "Activity - clawdeck" %>
+<% content_for :page_title, "Activity" %>
+
+<%= turbo_stream_from "activity_feed_#{current_user.id}" %>
+
+<div class="p-6" data-controller="activity">
+  <%# Tab navigation %>
+  <div class="flex items-center gap-1 mb-6 border-b border-border">
+    <button data-activity-target="tab" data-action="click->activity#switchTab"
+            data-tab="feed"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content whitespace-nowrap">
+      Live Feed
+      <% if @feed_events.any? %>
+        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @feed_events.size %></span>
+      <% end %>
+    </button>
+    <button data-activity-target="tab" data-action="click->activity#switchTab"
+            data-tab="sessions"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+      Sessions
+      <% if @sessions.any? %>
+        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @sessions.length %></span>
+      <% end %>
+    </button>
+    <button data-activity-target="tab" data-action="click->activity#switchTab"
+            data-tab="errors"
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+      Errors
+      <% if @error_count > 0 %>
+        <span class="ml-1 text-xs bg-accent/80 text-white px-1.5 py-0.5 rounded-full"><%= @error_count %></span>
+      <% end %>
+    </button>
+  </div>
+
+  <%# Live Feed panel %>
+  <div data-activity-target="panel" data-panel="feed">
+    <%= render "agent_events/live_feed_panel" %>
+  </div>
+
+  <%# Sessions panel %>
+  <div data-activity-target="panel" data-panel="sessions" class="hidden">
+    <%= render "agent_events/sessions_panel" %>
+  </div>
+
+  <%# Errors panel %>
+  <div data-activity-target="panel" data-panel="errors" class="hidden">
+    <%= render "agent_events/errors_panel" %>
+  </div>
+</div>

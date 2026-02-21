@@ -14,6 +14,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :agent_events, only: [ :index, :create ] do
+        collection do
+          get :sessions
+        end
+      end
+
       resources :tasks, only: [ :index, :show, :create, :update, :destroy ] do
         collection do
           get :next
@@ -49,6 +55,9 @@ Rails.application.routes.draw do
 
   # Content Studio
   resources :contents, only: [ :index, :create, :update ]
+
+  # Activity Feed
+  get "activity", to: "agent_events#show", as: :activity
 
   # Learnings Hub
   resources :learnings, only: [ :index, :update ] do
