@@ -11,7 +11,7 @@
     <% topic_groups.sort_by { |_, entries| -entries.size }.each do |topic, entries| %>
       <div>
         <div class="flex items-center gap-2 mb-3">
-          <span class="text-xs px-2 py-1 rounded-md bg-bg-elevated text-content-secondary font-medium"><%= topic %></span>
+          <span class="text-xs px-2 py-1 rounded-md bg-white/5 text-content-secondary font-medium"><%= topic %></span>
           <span class="text-xs text-content-muted"><%= entries.size %> <%= "entry".pluralize(entries.size) %></span>
         </div>
         <div class="space-y-3">
@@ -27,13 +27,13 @@
   </div>
 <% else %>
   <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
       <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No tagged entries yet</p>
-    <p class="text-xs text-content-muted/60 mt-1">Entries with tags will be grouped by topic here</p>
+    <p class="text-sm font-medium text-content-muted">No tagged entries yet</p>
+    <p class="text-xs text-content-muted/50 mt-1">Entries with tags will be grouped by topic here</p>
   </div>
 <% end %>

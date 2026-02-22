@@ -1,44 +1,44 @@
 <% content_for :title, "Learnings Hub - clawdeck" %>
 <% content_for :page_title, "Learnings Hub" %>
 
-<div class="p-4 sm:p-6" data-controller="learnings-hub">
+<div class="p-5 sm:p-8" data-controller="learnings-hub">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border overflow-x-auto" role="tablist" aria-label="Learnings Hub">
+  <div class="flex items-center gap-0.5 mb-5 sm:mb-8 border-b border-white/5 overflow-x-auto" role="tablist" aria-label="Learnings Hub">
     <button data-learnings-hub-target="tab" data-action="click->learnings-hub#switchTab keydown->learnings-hub#keydown"
             data-tab="corrections"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-accent text-content whitespace-nowrap">
       Corrections
       <% if @corrections.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @corrections.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @corrections.size %></span>
       <% end %>
     </button>
     <button data-learnings-hub-target="tab" data-action="click->learnings-hub#switchTab keydown->learnings-hub#keydown"
             data-tab="rules"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Rules
       <% if @rules.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @rules.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @rules.size %></span>
       <% end %>
     </button>
     <button data-learnings-hub-target="tab" data-action="click->learnings-hub#switchTab keydown->learnings-hub#keydown"
             data-tab="repeats"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Repeats
       <% if @repeats.any? %>
-        <span class="ml-1 text-xs bg-accent/80 text-white px-1.5 py-0.5 rounded-full"><%= @repeats.size %></span>
+        <span class="ml-1.5 text-[10px] bg-accent/80 text-white px-1.5 py-0.5 rounded-full"><%= @repeats.size %></span>
       <% end %>
     </button>
     <button data-learnings-hub-target="tab" data-action="click->learnings-hub#switchTab keydown->learnings-hub#keydown"
             data-tab="improvements"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Proposals
       <% if @proposals.any? %>
-        <span class="ml-1 text-xs bg-yellow-500/20 text-yellow-500 px-1.5 py-0.5 rounded-full"><%= @proposals.size %></span>
+        <span class="ml-1.5 text-[10px] bg-yellow-500/20 text-yellow-500 px-1.5 py-0.5 rounded-full"><%= @proposals.size %></span>
       <% end %>
     </button>
     <button data-learnings-hub-target="tab" data-action="click->learnings-hub#switchTab keydown->learnings-hub#keydown"
             data-tab="compactions"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Compactions
     </button>
   </div>

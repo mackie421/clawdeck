@@ -1,7 +1,7 @@
 <%# Single event row — used in Live Feed and Turbo Stream prepends %>
-<div id="event_<%= event.id %>" class="flex items-start gap-3 px-4 py-3 border-b border-border last:border-b-0 hover:bg-bg-elevated/30 transition-colors">
+<div id="event_<%= event.id %>" class="flex items-start gap-3 px-5 py-4 border-b border-white/5 last:border-b-0 hover:bg-white/[0.03] transition-colors">
   <%# Agent emoji %>
-  <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center text-sm">
+  <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm">
     <%= event.agent_emoji || "🤖" %>
   </div>
 
@@ -18,7 +18,7 @@
             when 'session_start' then 'bg-green-500/10 text-green-500'
             when 'session_end' then 'bg-gray-500/10 text-gray-400'
             when 'cron_run' then 'bg-orange-500/10 text-orange-400'
-            else 'bg-bg-elevated text-content-muted'
+            else 'bg-white/5 text-content-muted'
             end %>">
         <%= event.event_type.titleize %>
       </span>

@@ -4,7 +4,7 @@
   <h3 class="text-sm font-medium text-content-secondary mb-3">Service Status</h3>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
     <%# Gateway %>
-    <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="glass-card rounded-2xl p-5">
       <div class="flex items-center justify-between mb-2">
         <p class="text-sm font-medium text-content">Gateway</p>
         <% status_color = case @latest.gateway_status
@@ -18,7 +18,7 @@
     </div>
 
     <%# Telegram %>
-    <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="glass-card rounded-2xl p-5">
       <div class="flex items-center justify-between mb-2">
         <p class="text-sm font-medium text-content">Telegram Bot</p>
         <% tg_color = @latest.telegram_status == "connected" ? "bg-green-500" : "bg-red-500" %>
@@ -28,7 +28,7 @@
     </div>
 
     <%# Uptime %>
-    <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="glass-card rounded-2xl p-5">
       <div class="flex items-center justify-between mb-2">
         <p class="text-sm font-medium text-content">Uptime</p>
         <svg class="w-4 h-4 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -42,19 +42,19 @@
   <%# Cron Status %>
   <% if @latest.cron_results.present? && @latest.cron_results.any? %>
     <h3 class="text-sm font-medium text-content-secondary mb-3">Cron Jobs</h3>
-    <div class="bg-bg-surface border border-border rounded-lg overflow-hidden mb-6">
+    <div class="glass-card rounded-2xl overflow-hidden mb-6">
       <table class="w-full">
         <thead>
-          <tr class="border-b border-border">
-            <th class="text-left text-xs font-medium text-content-muted uppercase tracking-wide px-4 py-2">Job</th>
-            <th class="text-left text-xs font-medium text-content-muted uppercase tracking-wide px-4 py-2">Status</th>
+          <tr class="border-b border-white/5">
+            <th class="text-left text-xs font-medium text-content-muted uppercase tracking-wide px-5 py-2">Job</th>
+            <th class="text-left text-xs font-medium text-content-muted uppercase tracking-wide px-5 py-2">Status</th>
           </tr>
         </thead>
         <tbody>
           <% @latest.cron_results.each do |job_name, result| %>
-            <tr class="border-b border-border last:border-b-0">
-              <td class="px-4 py-2.5 text-sm text-content"><%= job_name %></td>
-              <td class="px-4 py-2.5">
+            <tr class="border-b border-white/5 last:border-b-0">
+              <td class="px-5 py-2.5 text-sm text-content"><%= job_name %></td>
+              <td class="px-5 py-2.5">
                 <% result_str = result.to_s.downcase %>
                 <span class="text-xs px-1.5 py-0.5 rounded font-medium
                   <%= result_str == 'success' ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400' %>">
@@ -74,13 +74,13 @@
     &middot; Source: <%= @latest.source %>
   </p>
 <% else %>
-  <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+  <div class="text-center py-8">
+    <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mx-auto mb-3">
       <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No health snapshots recorded yet</p>
-    <p class="text-xs text-content-muted/60 mt-1">The heartbeat script will post health data here</p>
+    <p class="text-sm font-medium text-content-muted">No health snapshots recorded yet</p>
+    <p class="text-xs text-content-muted/50 mt-1">The heartbeat script will post health data here</p>
   </div>
 <% end %>

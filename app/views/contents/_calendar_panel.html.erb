@@ -1,7 +1,7 @@
 <%# Week navigation %>
 <div class="flex items-center justify-between mb-4">
   <a href="<%= contents_path(week_start: @week_start - 7.days) %>"
-     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-bg-elevated">
+     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-white/5">
     <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
     </svg>
@@ -11,7 +11,7 @@
     <%= @week_start.strftime("%b %-d") %> &mdash; <%= @week_end.strftime("%b %-d, %Y") %>
   </span>
   <a href="<%= contents_path(week_start: @week_start + 7.days) %>"
-     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-bg-elevated">
+     class="text-xs text-content-secondary hover:text-content transition-colors px-2 py-1 rounded-md hover:bg-white/5">
     Next
     <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -20,10 +20,10 @@
 </div>
 
 <%# Week grid %>
-<div class="grid grid-cols-7 gap-px bg-border rounded-lg overflow-hidden">
+<div class="grid grid-cols-7 gap-px bg-white/5 rounded-xl overflow-hidden">
   <%# Day headers %>
   <% (@week_start..@week_end).each do |day| %>
-    <div class="bg-bg-surface px-2 py-2 text-center">
+    <div class="bg-bg-primary px-2 py-2 text-center">
       <p class="text-xs text-content-muted"><%= day.strftime("%a") %></p>
       <p class="text-sm font-medium <%= day == Date.current ? 'text-accent' : 'text-content' %>"><%= day.day %></p>
     </div>
@@ -31,7 +31,7 @@
 
   <%# Day cells with content %>
   <% (@week_start..@week_end).each do |day| %>
-    <div class="bg-bg-surface min-h-[100px] px-2 py-2">
+    <div class="bg-bg-primary min-h-[100px] px-2 py-2">
       <% day_contents = @calendar_contents.select { |c|
         (c.scheduled_at&.to_date == day) || (c.published_at&.to_date == day)
       } %>
@@ -52,12 +52,12 @@
 
 <% if @calendar_contents.empty? %>
   <div class="text-center py-8 mt-4">
-    <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-bg-elevated mb-2">
-      <svg class="w-5 h-5 text-content-muted/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+    <div class="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-white/5 mb-3">
+      <svg class="w-5 h-5 text-content-muted/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No scheduled or published content this week</p>
-    <p class="text-xs text-content-muted/60 mt-1">Schedule content from the Drafts tab to see it here</p>
+    <p class="text-sm font-medium text-content-muted">No scheduled or published content this week</p>
+    <p class="text-xs text-content-muted/50 mt-1">Schedule content from the Drafts tab to see it here</p>
   </div>
 <% end %>

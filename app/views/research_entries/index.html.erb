@@ -1,36 +1,36 @@
 <% content_for :title, "Research Hub - clawdeck" %>
 <% content_for :page_title, "Research Hub" %>
 
-<div class="p-4 sm:p-6" data-controller="research-hub">
+<div class="p-5 sm:p-8" data-controller="research-hub">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border overflow-x-auto" role="tablist" aria-label="Research Hub">
+  <div class="flex items-center gap-0.5 mb-5 sm:mb-8 border-b border-white/5 overflow-x-auto" role="tablist" aria-label="Research Hub">
     <button data-research-hub-target="tab" data-action="click->research-hub#switchTab keydown->research-hub#keydown"
             data-tab="latest"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-accent text-content whitespace-nowrap">
       Latest
       <% if @latest.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @latest.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @latest.size %></span>
       <% end %>
     </button>
     <button data-research-hub-target="tab" data-action="click->research-hub#switchTab keydown->research-hub#keydown"
             data-tab="topics"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       By Topic
     </button>
     <button data-research-hub-target="tab" data-action="click->research-hub#switchTab keydown->research-hub#keydown"
             data-tab="trends"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Trends
       <% if @trends.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @trends.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @trends.size %></span>
       <% end %>
     </button>
     <button data-research-hub-target="tab" data-action="click->research-hub#switchTab keydown->research-hub#keydown"
             data-tab="deep_dives"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Deep Dives
       <% if @deep_dives.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @deep_dives.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @deep_dives.size %></span>
       <% end %>
     </button>
   </div>

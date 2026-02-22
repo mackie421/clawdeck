@@ -174,7 +174,7 @@ class Task < ApplicationRecord
       stream,
       action: :replace,
       target: "column-#{cached_status}-count",
-      html: %(<span id="column-#{cached_status}-count" class="ml-auto text-xs text-content-secondary bg-bg-elevated px-1.5 py-0.5 rounded">#{count}</span>)
+      html: %(<span id="column-#{cached_status}-count" class="ml-auto text-[11px] text-content-muted bg-white/5 px-1.5 py-0.5 rounded-md font-medium">#{count}</span>)
     )
   end
 
@@ -183,7 +183,7 @@ class Task < ApplicationRecord
     broadcast_to_board(
       action: :replace,
       target: "column-#{column_status}-count",
-      html: %(<span id="column-#{column_status}-count" class="ml-auto text-xs text-content-secondary bg-bg-elevated px-1.5 py-0.5 rounded">#{count}</span>)
+      html: %(<span id="column-#{column_status}-count" class="ml-auto text-[11px] text-content-muted bg-white/5 px-1.5 py-0.5 rounded-md font-medium">#{count}</span>)
     )
   end
 

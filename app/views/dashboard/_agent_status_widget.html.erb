@@ -1,47 +1,47 @@
 <%# Agent Status Widget — Is the agent online? Last activity? %>
-<div class="bg-bg-surface border border-border rounded-lg">
-  <div class="flex items-center justify-between px-4 py-3 border-b border-border">
-    <h2 class="text-sm font-semibold text-content font-display">Agent Status</h2>
+<div class="glass-card rounded-2xl hover-lift">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-white/5">
+    <h2 class="text-sm font-semibold text-content font-display tracking-tight">Agent Status</h2>
     <% if @agent_in_session %>
-      <span class="flex items-center gap-1.5 text-xs text-status-success">
-        <span class="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+      <span class="flex items-center gap-1.5 text-[11px] font-medium text-status-success">
+        <span class="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
         In Session
       </span>
     <% elsif @agent_active %>
-      <span class="flex items-center gap-1.5 text-xs text-status-success">
-        <span class="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+      <span class="flex items-center gap-1.5 text-[11px] font-medium text-status-success">
+        <span class="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
         Online
       </span>
     <% else %>
-      <span class="flex items-center gap-1.5 text-xs text-content-muted">
-        <span class="w-1.5 h-1.5 rounded-full bg-content-muted"></span>
+      <span class="flex items-center gap-1.5 text-[11px] font-medium text-content-muted">
+        <span class="w-2 h-2 rounded-full bg-content-muted/40"></span>
         Offline
       </span>
     <% end %>
   </div>
 
-  <div class="p-4">
-    <div class="flex items-center gap-3 mb-4">
+  <div class="p-5">
+    <div class="flex items-center gap-3.5 mb-4">
       <%# Agent avatar %>
-      <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center">
+      <div class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center">
         <span class="text-xl"><%= current_user.agent_emoji || "🦞" %></span>
       </div>
       <div>
-        <p class="text-sm font-medium text-content"><%= current_user.agent_name || "Agent" %></p>
+        <p class="text-[13px] font-semibold text-content"><%= current_user.agent_name || "Agent" %></p>
         <% if current_user.agent_last_active_at.present? %>
-          <p class="text-xs text-content-muted">Last active <%= time_ago_in_words(current_user.agent_last_active_at) %> ago</p>
+          <p class="text-[11px] text-content-muted mt-0.5">Last active <%= time_ago_in_words(current_user.agent_last_active_at) %> ago</p>
         <% else %>
-          <p class="text-xs text-content-muted">Never connected</p>
+          <p class="text-[11px] text-content-muted mt-0.5">Never connected</p>
         <% end %>
       </div>
     </div>
 
     <%# Last activity — prefer agent_events, fall back to task_activities %>
     <% if @last_agent_event.present? %>
-      <div class="bg-bg-elevated rounded-md p-3">
-        <p class="text-xs text-content-muted mb-1">Last event</p>
+      <div class="bg-white/[0.03] rounded-xl p-3.5">
+        <p class="text-[10px] text-content-muted mb-1.5 tracking-wide uppercase">Last event</p>
         <div class="flex items-center gap-2">
-          <span class="text-xs font-medium
+          <span class="text-[12px] font-medium
             <%= case @last_agent_event.event_type
                 when 'task_completed' then 'text-green-400'
                 when 'task_claimed' then 'text-blue-400'
@@ -51,15 +51,15 @@
                 end %>">
             <%= @last_agent_event.event_type.titleize %>
           </span>
-          <span class="text-xs text-content-secondary truncate">
+          <span class="text-[12px] text-content-secondary truncate">
             <%= @last_agent_event.summary&.truncate(40) %>
           </span>
         </div>
-        <p class="text-[10px] text-content-muted mt-1"><%= time_ago_in_words(@last_agent_event.created_at) %> ago</p>
+        <p class="text-[10px] text-content-muted/50 mt-1.5"><%= time_ago_in_words(@last_agent_event.created_at) %> ago</p>
       </div>
     <% elsif @last_agent_activity.present? %>
-      <div class="bg-bg-elevated rounded-md p-3">
-        <p class="text-xs text-content-muted mb-1">Last action</p>
+      <div class="bg-white/[0.03] rounded-xl p-3.5">
+        <p class="text-[10px] text-content-muted mb-1.5 tracking-wide uppercase">Last action</p>
         <div class="flex items-center gap-2">
           <% icon_class = case @last_agent_activity.action
             when "created" then "text-status-info"
@@ -67,16 +67,16 @@
             when "updated" then "text-status-warning"
             else "text-content-secondary"
           end %>
-          <span class="text-xs <%= icon_class %> font-medium capitalize"><%= @last_agent_activity.action %></span>
-          <span class="text-xs text-content-secondary truncate">
+          <span class="text-[12px] <%= icon_class %> font-medium capitalize"><%= @last_agent_activity.action %></span>
+          <span class="text-[12px] text-content-secondary truncate">
             <%= @last_agent_activity.task&.name&.truncate(40) %>
           </span>
         </div>
-        <p class="text-[10px] text-content-muted mt-1"><%= time_ago_in_words(@last_agent_activity.created_at) %> ago</p>
+        <p class="text-[10px] text-content-muted/50 mt-1.5"><%= time_ago_in_words(@last_agent_activity.created_at) %> ago</p>
       </div>
     <% else %>
-      <div class="bg-bg-elevated rounded-md p-3 text-center">
-        <p class="text-xs text-content-muted">No agent activity recorded yet</p>
+      <div class="bg-white/[0.03] rounded-xl p-3.5 text-center">
+        <p class="text-[12px] text-content-muted">No agent activity recorded yet</p>
       </div>
     <% end %>
   </div>

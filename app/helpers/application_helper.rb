@@ -8,17 +8,17 @@ module ApplicationHelper
     if disabled
       content_tag(:div,
         content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9"),
-        class: "flex items-center rounded-md text-content-muted/40 cursor-default",
+        class: "flex items-center rounded-lg text-content-muted/30 cursor-default",
         title: "#{label} (coming soon)"
       )
     else
       link_to(path,
-        class: "group flex items-center rounded-md transition-colors #{active ? 'bg-bg-elevated text-accent' : 'text-content-secondary hover:bg-bg-elevated hover:text-content'}",
+        class: "group flex items-center rounded-lg transition-all duration-200 #{active ? 'bg-white/8 text-content shadow-[inset_0_0_0_0.5px_rgba(255,255,255,0.1)]' : 'text-content-muted hover:bg-white/5 hover:text-content'}",
         title: label,
         aria: { label: label, current: (active ? "page" : nil) },
         data: { turbo_frame: "_top" }
       ) do
-        content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9")
+        content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9 hover-scale")
       end
     end
   end
@@ -45,7 +45,7 @@ module ApplicationHelper
     when "updated"
       "bg-status-warning/20"
     else
-      "bg-bg-elevated"
+      "bg-white/5"
     end
   end
 

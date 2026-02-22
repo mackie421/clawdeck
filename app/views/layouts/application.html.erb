@@ -48,33 +48,33 @@
       <div class="h-screen flex flex-col bg-bg-base" data-controller="sidebar">
         <% if authenticated? %>
           <%= render "application/sidebar" %>
-          <%# Mobile overlay for sidebar %>
+          <%# Mobile overlay for sidebar — frosted backdrop %>
           <div data-sidebar-target="overlay"
                data-action="click->sidebar#close"
-               class="hidden fixed inset-0 z-30 bg-black/50 md:hidden"></div>
+               class="hidden fixed inset-0 z-30 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ease-out"></div>
         <% end %>
         <div data-sidebar-target="content" class="flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
-          <%# Dashboard header bar %>
-          <header class="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 bg-bg-base border-b border-border">
+          <%# Dashboard header bar — refined with subtle glass effect %>
+          <header class="flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 bg-bg-base/80 backdrop-blur-xl border-b border-white/5">
             <div class="flex items-center gap-3">
               <%# Mobile hamburger — opens sidebar %>
               <button data-action="click->sidebar#toggle"
-                      class="md:hidden flex items-center justify-center w-8 h-8 -ml-1 rounded-md hover:bg-bg-elevated transition-colors cursor-pointer"
+                      class="md:hidden flex items-center justify-center w-8 h-8 -ml-1 rounded-lg hover:bg-white/5 transition-all duration-200 cursor-pointer press-scale"
                       aria-label="Open menu">
                 <svg class="w-5 h-5 text-content-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
               </button>
-              <h1 class="text-lg font-semibold text-content font-display"><%= yield(:page_title).presence || "Dashboard" %></h1>
+              <h1 class="text-lg font-semibold text-content font-display tracking-tight"><%= yield(:page_title).presence || "Dashboard" %></h1>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-3">
               <%= yield(:header_actions) %>
               <%# Agent indicator %>
               <% if authenticated? && current_user.agent_last_active_at.present? %>
                 <div class="relative cursor-default" title="<%= current_user.agent_name || 'Agent' %> • Last active: <%= time_ago_in_words(current_user.agent_last_active_at) %> ago">
                   <span class="text-lg"><%= current_user.agent_emoji || "🦞" %></span>
                   <% if current_user.agent_last_active_at > 5.minutes.ago %>
-                    <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border border-bg-base"></span>
+                    <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-status-success rounded-full border-2 border-bg-base animate-pulse"></span>
                   <% end %>
                 </div>
               <% end %>
@@ -82,8 +82,8 @@
               <% if authenticated? %>
                 <div class="relative" data-controller="dropdown">
                   <button type="button" data-dropdown-target="button" data-action="click->dropdown#toggle"
-                          class="flex items-center cursor-pointer" aria-expanded="false" aria-haspopup="true">
-                    <div class="w-7 h-7 rounded-md overflow-hidden bg-bg-surface flex items-center justify-center">
+                          class="flex items-center cursor-pointer press-scale" aria-expanded="false" aria-haspopup="true">
+                    <div class="w-8 h-8 rounded-full overflow-hidden bg-white/5 flex items-center justify-center ring-1 ring-white/5 transition-all duration-200 hover:ring-white/10">
                       <% if current_user.has_avatar? %>
                         <%= image_tag current_user.avatar_source, class: "w-full h-full object-cover", alt: "Your avatar" %>
                       <% else %>
@@ -94,19 +94,19 @@
                     </div>
                   </button>
                   <div data-dropdown-target="menu"
-                       class="hidden absolute right-0 top-full mt-1 w-48 bg-bg-surface rounded-lg shadow-lg border border-border overflow-hidden z-50">
-                    <div class="px-3 py-2.5 bg-bg-elevated border-b border-border">
+                       class="hidden absolute right-0 top-full mt-2 w-52 glass-card rounded-xl overflow-hidden z-50">
+                    <div class="px-4 py-3 border-b border-white/5">
                       <p class="text-xs font-medium text-content truncate"><%= current_user.email_address.split('@').first %></p>
-                      <p class="text-xs text-content-muted truncate"><%= current_user.email_address %></p>
+                      <p class="text-[11px] text-content-muted truncate mt-0.5"><%= current_user.email_address %></p>
                     </div>
-                    <div class="py-1">
-                      <%= link_to settings_path, class: "flex items-center gap-2 px-3 py-2 text-xs text-content-secondary hover:bg-bg-elevated transition-colors" do %>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <div class="py-1.5">
+                      <%= link_to settings_path, class: "flex items-center gap-2.5 px-4 py-2 text-[13px] text-content-secondary hover:bg-white/5 transition-colors duration-150" do %>
+                        <svg class="w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                         Settings
                       <% end %>
-                      <div class="border-t border-border my-1"></div>
-                      <%= link_to session_path, method: :delete, data: { turbo_method: :delete }, class: "flex items-center gap-2 px-3 py-2 text-xs text-accent hover:bg-bg-elevated transition-colors" do %>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                      <div class="border-t border-white/5 my-1 mx-3"></div>
+                      <%= link_to session_path, method: :delete, data: { turbo_method: :delete }, class: "flex items-center gap-2.5 px-4 py-2 text-[13px] text-accent hover:bg-white/5 transition-colors duration-150" do %>
+                        <svg class="w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                         Sign out
                       <% end %>
                     </div>
@@ -115,9 +115,9 @@
               <% end %>
             </div>
           </header>
-          <%# Page content %>
+          <%# Page content with fade-in animation %>
           <div class="flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
-            <main class="text-content-secondary font-normal text-sm">
+            <main class="text-content-secondary font-normal text-sm animate-fade-in">
               <%= yield %>
             </main>
           </div>

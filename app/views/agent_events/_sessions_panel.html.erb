@@ -5,11 +5,11 @@
       <% first_event = session_events.first %>
       <% error_count = session_events.count { |e| e.severity_error? } %>
 
-      <div class="bg-bg-surface border border-border rounded-lg overflow-hidden" data-controller="disclosure">
+      <div class="glass-card rounded-2xl overflow-hidden" data-controller="disclosure">
         <%# Session header — clickable to expand %>
         <button data-action="click->disclosure#toggle"
-                class="w-full flex items-center gap-3 px-4 py-3 hover:bg-bg-elevated/30 transition-colors cursor-pointer">
-          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center text-sm">
+                class="w-full flex items-center gap-3 px-5 py-4 hover:bg-white/[0.03] transition-colors cursor-pointer">
+          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm">
             <%= first_event&.agent_emoji || "🤖" %>
           </div>
           <div class="flex-1 min-w-0 text-left">
@@ -32,7 +32,7 @@
         </button>
 
         <%# Collapsible event list %>
-        <div data-disclosure-target="content" class="hidden border-t border-border">
+        <div data-disclosure-target="content" class="hidden border-t border-white/5">
           <% session_events.each do |event| %>
             <%= render "agent_events/event_item", event: event %>
           <% end %>
@@ -41,13 +41,13 @@
     <% end %>
   </div>
 <% else %>
-  <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+  <div class="text-center py-8">
+    <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mx-auto mb-3">
       <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No sessions recorded</p>
-    <p class="text-xs text-content-muted/60 mt-1">Agent sessions will appear here grouped by session ID</p>
+    <p class="text-sm font-medium text-content-muted">No sessions recorded</p>
+    <p class="text-xs text-content-muted/50 mt-1">Agent sessions will appear here grouped by session ID</p>
   </div>
 <% end %>

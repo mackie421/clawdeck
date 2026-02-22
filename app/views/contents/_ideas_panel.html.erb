@@ -1,21 +1,21 @@
 <%# Quick-capture form for new ideas %>
-<div class="bg-bg-surface border border-border rounded-lg p-4 mb-4">
-  <h3 class="text-sm font-medium text-content mb-3">Quick Capture</h3>
+<div class="glass-card rounded-2xl p-5 mb-4">
+  <h3 class="text-sm font-medium text-content tracking-tight mb-3">Quick Capture</h3>
   <%= form_with url: contents_path, method: :post, class: "space-y-3" do |f| %>
     <div>
       <input type="text" name="content[title]" placeholder="What's the idea?"
-             class="w-full bg-bg-elevated border border-border rounded-md px-3 py-2 text-sm text-content placeholder-content-muted focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
+             class="w-full bg-white/5 border border-white/5 rounded-md px-3 py-2 text-sm text-content placeholder-content-muted focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
              required>
     </div>
     <div class="flex items-center gap-3">
       <select name="content[platform]"
-              class="bg-bg-elevated border border-border rounded-md px-3 py-2 text-sm text-content-secondary focus:outline-none focus:ring-1 focus:ring-accent">
+              class="bg-white/5 border border-white/5 rounded-md px-3 py-2 text-sm text-content-secondary focus:outline-none focus:ring-1 focus:ring-accent">
         <% Content.platforms.keys.each do |platform| %>
           <option value="<%= platform %>"><%= platform.titleize %></option>
         <% end %>
       </select>
       <input type="text" name="content[tags][]" placeholder="Tag (optional)"
-             class="flex-1 bg-bg-elevated border border-border rounded-md px-3 py-2 text-sm text-content placeholder-content-muted focus:outline-none focus:ring-1 focus:ring-accent">
+             class="flex-1 bg-white/5 border border-white/5 rounded-md px-3 py-2 text-sm text-content placeholder-content-muted focus:outline-none focus:ring-1 focus:ring-accent">
       <input type="hidden" name="content[status]" value="idea">
       <input type="hidden" name="content[content_type]" value="idea">
       <input type="hidden" name="content[source]" value="manual">
@@ -29,7 +29,7 @@
 <% if @ideas.any? %>
   <div class="space-y-2">
     <% @ideas.each do |content| %>
-      <div id="<%= dom_id(content) %>" class="bg-bg-surface border border-border rounded-lg px-4 py-3 flex items-center justify-between gap-3">
+      <div id="<%= dom_id(content) %>" class="bg-white/[0.04] border border-white/[0.06] rounded-xl px-5 py-4 flex items-center justify-between gap-3 hover:bg-white/[0.07] hover:border-white/[0.1] shadow-card transition-all">
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2">
             <h3 class="text-sm text-content truncate"><%= content.title %></h3>
@@ -38,7 +38,7 @@
           <% if content.tags.present? && content.tags.any? %>
             <div class="flex items-center gap-1 mt-1">
               <% content.tags.each do |tag| %>
-                <span class="text-xs bg-bg-elevated text-content-muted px-1.5 py-0.5 rounded"><%= tag %></span>
+                <span class="text-xs bg-white/5 text-content-muted px-1.5 py-0.5 rounded"><%= tag %></span>
               <% end %>
             </div>
           <% end %>
@@ -52,7 +52,7 @@
           <%= form_with url: content_path(content), method: :patch, class: "inline" do |f| %>
             <input type="hidden" name="content[status]" value="archived">
             <%= f.submit "Discard",
-              class: "text-xs px-2.5 py-1.5 rounded-md bg-bg-elevated text-content-muted hover:bg-bg-hover transition-colors cursor-pointer" %>
+              class: "text-xs px-2.5 py-1.5 rounded-md bg-white/5 text-content-muted hover:bg-white/10 transition-colors cursor-pointer" %>
           <% end %>
         </div>
       </div>
@@ -60,12 +60,12 @@
   </div>
 <% else %>
   <div class="text-center py-8">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+    <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mx-auto mb-3">
       <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No ideas captured yet</p>
-    <p class="text-xs text-content-muted/60 mt-1">Use the form above to jot down content ideas</p>
+    <p class="text-sm font-medium text-content-muted">No ideas captured yet</p>
+    <p class="text-xs text-content-muted/50 mt-1">Use the form above to jot down content ideas</p>
   </div>
 <% end %>

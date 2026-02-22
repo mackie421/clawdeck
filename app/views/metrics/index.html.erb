@@ -1,22 +1,22 @@
 <% content_for :title, "Analytics - clawdeck" %>
 <% content_for :page_title, "Analytics" %>
 
-<div class="p-4 sm:p-6" data-controller="analytics">
+<div class="p-5 sm:p-8" data-controller="analytics">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border" role="tablist" aria-label="Analytics">
+  <div class="flex items-center gap-0.5 mb-5 sm:mb-8 border-b border-white/5" role="tablist" aria-label="Analytics">
     <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="overview"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-accent text-content">
       Overview
     </button>
     <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="charts"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
       Charts
     </button>
     <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="reports"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
       Reports
     </button>
   </div>

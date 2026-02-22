@@ -1,7 +1,7 @@
 <% if @corrections.any? %>
   <div class="space-y-3">
     <% @corrections.each do |learning| %>
-      <div id="<%= dom_id(learning) %>" class="bg-bg-surface border border-border rounded-lg p-4">
+      <div id="<%= dom_id(learning) %>" class="glass-card rounded-2xl p-5">
         <div class="flex items-start justify-between gap-3">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-2 flex-wrap">
@@ -12,7 +12,7 @@
                     when 'tool_use' then 'bg-orange-500/10 text-orange-400'
                     when 'formatting' then 'bg-green-500/10 text-green-400'
                     when 'boundaries' then 'bg-red-500/10 text-red-400'
-                    else 'bg-bg-elevated text-content-muted'
+                    else 'bg-white/5 text-content-muted'
                     end %>">
                 <%= learning.category.titleize %>
               </span>
@@ -20,7 +20,7 @@
                 <%= case learning.severity
                     when 'critical' then 'bg-red-500/10 text-red-400'
                     when 'moderate' then 'bg-yellow-500/10 text-yellow-500'
-                    else 'bg-bg-elevated text-content-muted'
+                    else 'bg-white/5 text-content-muted'
                     end %>">
                 <%= learning.severity.capitalize %>
               </span>
@@ -30,7 +30,7 @@
                 </span>
               <% end %>
             </div>
-            <h3 class="text-sm font-medium text-content"><%= learning.title %></h3>
+            <h3 class="text-sm font-medium text-content tracking-tight"><%= learning.title %></h3>
             <% if learning.body.present? %>
               <p class="text-xs text-content-secondary mt-1 line-clamp-3"><%= learning.body.truncate(300) %></p>
             <% end %>
@@ -51,7 +51,7 @@
             <%= form_with url: learning_path(learning), method: :patch, class: "inline" do |f| %>
               <input type="hidden" name="learning[status]" value="superseded">
               <%= f.submit "Dismiss",
-                class: "text-xs px-2.5 py-1.5 rounded-md bg-bg-elevated text-content-muted hover:bg-bg-hover transition-colors cursor-pointer" %>
+                class: "text-xs px-2.5 py-1.5 rounded-md bg-white/5 text-content-muted hover:bg-bg-hover transition-colors cursor-pointer" %>
             <% end %>
           </div>
         </div>
@@ -59,13 +59,13 @@
     <% end %>
   </div>
 <% else %>
-  <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
-      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+  <div class="text-center py-8">
+    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No corrections recorded</p>
-    <p class="text-xs text-content-muted/60 mt-1">Corrections from the agent will appear here as they're submitted via the API</p>
+    <p class="text-sm font-medium text-content-muted">No corrections recorded</p>
+    <p class="text-xs text-content-muted/50 mt-1">Corrections from the agent will appear here as they're submitted via the API</p>
   </div>
 <% end %>

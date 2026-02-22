@@ -1,28 +1,28 @@
 <% content_for :title, "Content Studio - clawdeck" %>
 <% content_for :page_title, "Content Studio" %>
 
-<div class="p-4 sm:p-6" data-controller="content-studio">
+<div class="p-5 sm:p-8" data-controller="content-studio">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border overflow-x-auto" role="tablist" aria-label="Content Studio">
+  <div class="flex items-center gap-0.5 mb-5 sm:mb-8 border-b border-white/5 overflow-x-auto" role="tablist" aria-label="Content Studio">
     <button data-content-studio-target="tab" data-action="click->content-studio#switchTab keydown->content-studio#keydown"
             data-tab="drafts"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-accent text-content whitespace-nowrap">
       Drafts
       <% if @drafts.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @drafts.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @drafts.size %></span>
       <% end %>
     </button>
     <button data-content-studio-target="tab" data-action="click->content-studio#switchTab keydown->content-studio#keydown"
             data-tab="ideas"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Ideas
       <% if @ideas.any? %>
-        <span class="ml-1 text-xs bg-bg-elevated text-content-secondary px-1.5 py-0.5 rounded-full"><%= @ideas.size %></span>
+        <span class="ml-1.5 text-[10px] bg-white/5 text-content-secondary px-1.5 py-0.5 rounded-full"><%= @ideas.size %></span>
       <% end %>
     </button>
     <button data-content-studio-target="tab" data-action="click->content-studio#switchTab keydown->content-studio#keydown"
             data-tab="calendar"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
+            class="px-4 py-2.5 text-[13px] font-medium border-b-2 transition-colors duration-200 cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Calendar
     </button>
   </div>

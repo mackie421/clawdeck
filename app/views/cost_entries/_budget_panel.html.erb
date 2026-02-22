@@ -6,7 +6,7 @@
     <%= render "shared/empty_state", icon: "dollar", title: "No cost data yet", subtitle: "Budget tracking will activate once cost entries are recorded via the API." %>
   <% end %>
 
-  <div class="bg-bg-surface border border-border rounded-lg p-4 mb-4">
+  <div class="glass-card rounded-2xl p-5 mb-4">
     <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Current Month Spend</p>
     <p class="text-3xl font-semibold text-content">$<%= sprintf("%.4f", @month_total) %></p>
     <p class="text-xs text-content-muted mt-1">
@@ -15,7 +15,7 @@
   </div>
 
   <%# Budget threshold display %>
-  <div class="bg-bg-surface border border-border rounded-lg p-4">
+  <div class="glass-card rounded-2xl p-5">
     <div class="flex items-center gap-2 mb-3">
       <svg class="w-4 h-4 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
@@ -26,18 +26,18 @@
       Budget alerts can be configured via user settings. When monthly spend approaches the threshold,
       a visual warning will appear on the spend cards.
     </p>
-    <p class="text-xs text-content-muted/60 mt-2">
+    <p class="text-xs text-content-muted/50 mt-2">
       Tip: Typical monthly LLM cost for this setup is $2–10/month.
     </p>
   </div>
 
   <%# Monthly summary stats %>
   <div class="mt-4 grid grid-cols-2 gap-3">
-    <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="glass-card rounded-2xl p-5">
       <p class="text-xs text-content-muted uppercase tracking-wide">Total API Calls</p>
       <p class="text-2xl font-semibold text-content mt-1"><%= @total_entries %></p>
     </div>
-    <div class="bg-bg-surface border border-border rounded-lg p-4">
+    <div class="glass-card rounded-2xl p-5">
       <p class="text-xs text-content-muted uppercase tracking-wide">Daily Average</p>
       <% days_elapsed = [Time.current.day, 1].max %>
       <p class="text-2xl font-semibold text-content mt-1">$<%= sprintf("%.4f", @month_total / days_elapsed) %></p>

@@ -4,8 +4,8 @@
   <% grouped = @chart_metrics.group_by(&:name) %>
 
   <%# Category distribution bar %>
-  <div class="bg-bg-surface border border-border rounded-lg p-4 mb-4">
-    <h3 class="text-sm font-medium text-content mb-3">Metrics by Category</h3>
+  <div class="glass-card rounded-2xl p-5 mb-4">
+    <h3 class="text-sm font-medium text-content mb-3 tracking-tight">Metrics by Category</h3>
     <% category_counts = @metrics.group(:category).count %>
     <% max_count = category_counts.values.max || 1 %>
     <div class="space-y-2">
@@ -14,7 +14,7 @@
         <% next if count == 0 %>
         <div class="flex items-center gap-3">
           <span class="text-xs text-content-secondary w-16 text-right"><%= cat.titleize %></span>
-          <div class="flex-1 bg-bg-elevated rounded-full h-2 overflow-hidden">
+          <div class="flex-1 bg-white/5 rounded-full h-2 overflow-hidden">
             <div class="h-2 rounded-full transition-all
               <%= case cat
                   when 'social' then 'bg-blue-500'
@@ -34,14 +34,14 @@
   <%# Platform distribution %>
   <% platform_counts = @metrics.where.not(platform: nil).group(:platform).count %>
   <% if platform_counts.any? %>
-    <div class="bg-bg-surface border border-border rounded-lg p-4 mb-4">
-      <h3 class="text-sm font-medium text-content mb-3">Metrics by Platform</h3>
+    <div class="glass-card rounded-2xl p-5 mb-4">
+      <h3 class="text-sm font-medium text-content mb-3 tracking-tight">Metrics by Platform</h3>
       <% plat_max = platform_counts.values.max || 1 %>
       <div class="space-y-2">
         <% platform_counts.sort_by { |_, v| -v }.each do |plat, count| %>
           <div class="flex items-center gap-3">
             <span class="text-xs text-content-secondary w-24 text-right truncate"><%= plat.titleize %></span>
-            <div class="flex-1 bg-bg-elevated rounded-full h-2 overflow-hidden">
+            <div class="flex-1 bg-white/5 rounded-full h-2 overflow-hidden">
               <div class="h-2 rounded-full bg-accent transition-all"
                 style="width: <%= (count.to_f / plat_max * 100).round %>%">
               </div>
@@ -54,8 +54,8 @@
   <% end %>
 
   <%# Per-metric sparklines (last 30 days) %>
-  <div class="bg-bg-surface border border-border rounded-lg p-4">
-    <h3 class="text-sm font-medium text-content mb-3">Metric Trends (Last 30 Days)</h3>
+  <div class="glass-card rounded-2xl p-5">
+    <h3 class="text-sm font-medium text-content mb-3 tracking-tight">Metric Trends (Last 30 Days)</h3>
     <div class="space-y-4">
       <% grouped.each do |name, entries| %>
         <div>
@@ -88,12 +88,12 @@
   </div>
 <% else %>
   <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
+    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
       <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No chart data available</p>
-    <p class="text-xs text-content-muted/60 mt-1">Charts will populate as metrics are recorded over time</p>
+    <p class="text-sm font-medium text-content-muted">No chart data available</p>
+    <p class="text-xs text-content-muted/50 mt-1">Charts will populate as metrics are recorded over time</p>
   </div>
 <% end %>

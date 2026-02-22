@@ -1,6 +1,6 @@
 <% has_current_user = defined?(current_user) && current_user %>
 <li id="task_<%= task.id %>"
-    class="group bg-bg-elevated border border-border rounded-md cursor-pointer transition-all hover:bg-bg-hover <%= 'border-l-4 border-l-status-warning' if task.blocked? %>"
+    class="group bg-white/[0.04] border border-white/[0.06] rounded-xl cursor-pointer transition-all duration-200 hover:bg-white/[0.07] hover:border-white/[0.1] shadow-card <%= 'border-l-4 border-l-status-warning' if task.blocked? %>"
     <% if has_current_user %>
       data-controller="dropdown delete-confirm task-move"
       data-action="contextmenu->dropdown#openAtCursor"
@@ -16,13 +16,13 @@
   <%# Context Menu (right-click) - only rendered when current_user is available (not during broadcasts) %>
   <% if has_current_user %>
     <button data-dropdown-target="button" class="hidden" aria-expanded="false"></button>
-    <div data-dropdown-target="menu" class="hidden fixed z-[100] min-w-[160px] bg-bg-elevated border border-border rounded-lg shadow-lg py-1">
+    <div data-dropdown-target="menu" class="hidden fixed z-[100] min-w-[160px] glass-card rounded-xl py-1.5">
       <%# Assignment %>
       <%= button_to board_task_path(task.board, task),
           method: :patch,
           params: { task: { assignee: task.assigned_to_me? ? "" : "me" } },
           data: { action: "click->dropdown#close" },
-          class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors" do %>
+          class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors" do %>
         <span class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -44,7 +44,7 @@
             method: :patch,
             params: { task: { assignee: task.assigned_to_agent? ? "" : "agent" } },
             data: { action: "click->dropdown#close" },
-            class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors" do %>
+            class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors" do %>
           <span class="flex items-center gap-2">
             <span class="w-4 text-center text-xs"><%= agent_emoji %></span>
             <%= task.assigned_to_agent? ? "Unassign #{agent_name}" : "Assign to #{agent_name}" %>
@@ -56,11 +56,11 @@
           <% end %>
         <% end %>
       <% end %>
-      <div class="border-t border-border my-1"></div>
+      <div class="border-t border-white/5 my-1"></div>
 
       <%# Priority Selection - Submenu %>
       <div class="relative group/priority">
-        <button type="button" class="w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors">
+        <button type="button" class="w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors">
           <span class="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
@@ -72,7 +72,7 @@
           </svg>
         </button>
         <%# Submenu %>
-        <div class="absolute left-full top-0 ml-1 hidden group-hover/priority:block min-w-[140px] bg-bg-elevated border border-border rounded-lg shadow-lg py-1">
+        <div class="absolute left-full top-0 ml-1 hidden group-hover/priority:block min-w-[140px] glass-card rounded-xl py-1.5">
           <% [
             ["none", "None", nil, "text-content-muted"],
             ["low", "Low", 1, "text-yellow-500"],
@@ -83,7 +83,7 @@
                 method: :patch,
                 params: { task: { priority: priority } },
                 data: { action: "click->dropdown#close" },
-                class: "w-full flex items-center justify-between gap-3 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors" do %>
+                class: "w-full flex items-center justify-between gap-3 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors" do %>
               <span class="flex items-center gap-2">
                 <% if flame_count.nil? %>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 <%= color %>">
@@ -109,7 +109,7 @@
           <% end %>
         </div>
       </div>
-      <div class="border-t border-border my-1"></div>
+      <div class="border-t border-white/5 my-1"></div>
 
       <%# Delete Button - opens modal that's outside the dropdown %>
       <button type="button"
@@ -142,7 +142,7 @@
   <% if task.tags.present? && task.tags.any? %>
     <div class="flex flex-wrap gap-1 mt-2">
       <% task.tags.each do |tag| %>
-        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-bg-surface text-content-secondary">
+        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/5 text-content-secondary">
           <%= tag %>
         </span>
       <% end %>
@@ -185,7 +185,7 @@
       <% if has_current_user %>
         <button type="button"
                 data-action="click->task-move#toggle"
-                class="md:hidden flex items-center justify-center w-6 h-6 rounded bg-bg-surface hover:bg-bg-hover text-content-muted transition-colors cursor-pointer"
+                class="md:hidden flex items-center justify-center w-6 h-6 rounded bg-white/5 hover:bg-white/5 text-content-muted transition-colors cursor-pointer"
                 aria-label="Move to column"
                 title="Move to...">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5">
@@ -194,7 +194,7 @@
         </button>
 
         <%# Status Picker Popover (mobile) %>
-        <div data-task-move-target="menu" class="hidden fixed z-[100] min-w-[160px] bg-bg-elevated border border-border rounded-lg shadow-lg py-1">
+        <div data-task-move-target="menu" class="hidden fixed z-[100] min-w-[160px] glass-card rounded-xl py-1.5">
           <%
             move_statuses = [
               ["inbox", "Inbox", "bg-content-muted"],
@@ -208,7 +208,7 @@
             <button type="button"
                     data-action="click->task-move#move"
                     data-status="<%= status_key %>"
-                    class="w-full flex items-center justify-between gap-2 px-3 py-2 text-sm transition-colors cursor-pointer <%= task.status == status_key ? 'text-content bg-bg-hover' : 'text-content-secondary hover:bg-bg-hover' %>">
+                    class="w-full flex items-center justify-between gap-2 px-3 py-2 text-sm transition-colors cursor-pointer <%= task.status == status_key ? 'text-content bg-bg-hover' : 'text-content-secondary hover:bg-white/5' %>">
               <span class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full <%= status_color %>"></span>
                 <%= status_label %>
@@ -229,7 +229,7 @@
           <button type="button"
                   data-dropdown-target="button"
                   data-action="click->dropdown#toggle"
-                  class="flex items-center justify-center w-6 h-6 rounded-full cursor-pointer transition-colors <%= task.assignee.present? ? 'hover:ring-1 hover:ring-accent/50' : 'bg-bg-surface hover:bg-bg-hover' %>"
+                  class="flex items-center justify-center w-6 h-6 rounded-full cursor-pointer transition-colors <%= task.assignee.present? ? 'hover:ring-1 hover:ring-accent/50' : 'bg-white/5 hover:bg-white/5' %>"
                   title="<%= task.assigned_to_me? ? 'Assigned to you' : task.assigned_to_agent? ? "Assigned to #{task.user.agent_name || 'Agent'}" : 'Unassigned — click to assign' %>"
                   aria-label="Assignment">
             <% if task.assigned_to_me? %>
@@ -249,13 +249,13 @@
           </button>
 
           <%# Assignment picker dropdown %>
-          <div data-dropdown-target="menu" class="hidden absolute right-0 bottom-full mb-1 z-[100] min-w-[140px] bg-bg-elevated border border-border rounded-lg shadow-lg py-1">
+          <div data-dropdown-target="menu" class="hidden absolute right-0 bottom-full mb-1 z-[100] min-w-[140px] glass-card rounded-xl py-1.5">
             <%# Assign to me %>
             <%= button_to board_task_path(task.board, task),
                 method: :patch,
                 params: { task: { assignee: task.assigned_to_me? ? "" : "me" } },
                 data: { action: "click->dropdown#close" },
-                class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors cursor-pointer" do %>
+                class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors cursor-pointer" do %>
               <span class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -278,7 +278,7 @@
                   method: :patch,
                   params: { task: { assignee: task.assigned_to_agent? ? "" : "agent" } },
                   data: { action: "click->dropdown#close" },
-                  class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-bg-hover transition-colors cursor-pointer" do %>
+                  class: "w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-content-secondary hover:bg-white/5 transition-colors cursor-pointer" do %>
                 <span class="flex items-center gap-2">
                   <span class="w-4 text-center text-xs"><%= agent_emoji %></span>
                   <%= task.assigned_to_agent? ? "Unassign #{agent_name}" : "Assign to #{agent_name}" %>

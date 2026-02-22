@@ -1,45 +1,45 @@
 <%# Progress Widget — Completion stats: done today, this week, streak %>
-<div class="bg-bg-surface border border-border rounded-lg">
-  <div class="flex items-center justify-between px-4 py-3 border-b border-border">
-    <h2 class="text-sm font-semibold text-content font-display">Progress</h2>
-    <span class="text-xs text-content-muted">This week</span>
+<div class="glass-card rounded-2xl hover-lift">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-white/5">
+    <h2 class="text-sm font-semibold text-content font-display tracking-tight">Progress</h2>
+    <span class="text-[11px] text-content-muted font-medium tracking-wide uppercase">This week</span>
   </div>
 
-  <div class="p-4">
+  <div class="p-5">
     <div class="grid grid-cols-3 gap-4">
       <%# Done today %>
       <div class="text-center">
-        <p class="text-2xl font-bold text-content font-display"><%= @done_today %></p>
-        <p class="text-xs text-content-muted mt-1">Done today</p>
+        <p class="stat-number text-3xl text-content"><%= @done_today %></p>
+        <p class="text-[11px] text-content-muted mt-2 tracking-wide">Done today</p>
       </div>
 
       <%# Done this week %>
       <div class="text-center">
-        <p class="text-2xl font-bold text-content font-display"><%= @done_this_week %></p>
-        <p class="text-xs text-content-muted mt-1">This week</p>
+        <p class="stat-number text-3xl text-content"><%= @done_this_week %></p>
+        <p class="text-[11px] text-content-muted mt-2 tracking-wide">This week</p>
       </div>
 
       <%# Streak %>
       <div class="text-center">
-        <p class="text-2xl font-bold font-display <%= @completion_streak > 0 ? 'text-status-success' : 'text-content-muted' %>">
+        <p class="stat-number text-3xl <%= @completion_streak > 0 ? 'text-status-success' : 'text-content-muted' %>">
           <%= @completion_streak %><span class="text-sm"><%= @completion_streak > 0 ? "🔥" : "" %></span>
         </p>
-        <p class="text-xs text-content-muted mt-1">Day streak</p>
+        <p class="text-[11px] text-content-muted mt-2 tracking-wide">Day streak</p>
       </div>
     </div>
 
     <%# Open tasks indicator %>
-    <div class="mt-4 pt-4 border-t border-border">
+    <div class="mt-5 pt-5 border-t border-white/5">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-content-muted">Open tasks</span>
-        <span class="text-xs font-medium text-content"><%= @total_open %></span>
+        <span class="text-[11px] text-content-muted tracking-wide">Open tasks</span>
+        <span class="text-[11px] font-semibold text-content"><%= @total_open %></span>
       </div>
       <% if @total_open > 0 && @done_this_week > 0 %>
-        <div class="mt-2 w-full bg-bg-elevated rounded-full h-1.5">
+        <div class="mt-2.5 w-full bg-white/5 rounded-full h-1.5">
           <% pct = [(@done_this_week.to_f / (@done_this_week + @total_open) * 100).round, 100].min %>
-          <div class="bg-status-success rounded-full h-1.5 transition-all" style="width: <%= pct %>%"></div>
+          <div class="bg-status-success rounded-full h-1.5 transition-all duration-500 ease-out" style="width: <%= pct %>%"></div>
         </div>
-        <p class="text-[10px] text-content-muted mt-1"><%= pct %>% of total completed this week</p>
+        <p class="text-[10px] text-content-muted/50 mt-1.5"><%= pct %>% of total completed this week</p>
       <% end %>
     </div>
   </div>

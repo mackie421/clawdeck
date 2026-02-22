@@ -1,13 +1,13 @@
 <%# Agenda Widget — Today's tasks by priority + due date %>
-<div class="bg-bg-surface border border-border rounded-lg">
-  <div class="flex items-center justify-between px-4 py-3 border-b border-border">
-    <h2 class="text-sm font-semibold text-content font-display">Agenda</h2>
-    <span class="text-xs text-content-muted">Today</span>
+<div class="glass-card rounded-2xl hover-lift">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-white/5">
+    <h2 class="text-sm font-semibold text-content font-display tracking-tight">Agenda</h2>
+    <span class="text-[11px] text-content-muted font-medium tracking-wide uppercase">Today</span>
   </div>
 
-  <div class="p-4">
+  <div class="p-5">
     <% if @agenda_tasks.any? %>
-      <ul class="flex flex-col gap-2">
+      <ul class="flex flex-col gap-2.5">
         <% @agenda_tasks.each do |task| %>
           <li class="flex items-center gap-3 group">
             <%# Priority indicator %>
@@ -16,16 +16,16 @@
                 when "high" then "bg-accent"
                 when "medium" then "bg-orange-500"
                 when "low" then "bg-yellow-500"
-                else "bg-content-muted/30"
+                else "bg-content-muted/20"
               end %>
-              <span class="block w-1.5 h-1.5 rounded-full <%= color %>"></span>
+              <span class="block w-2 h-2 rounded-full <%= color %>"></span>
             </div>
 
             <%# Task name %>
             <% board = task.board %>
             <%= link_to board_task_path(board, task),
                         data: { turbo_frame: "_top" },
-                        class: "flex-1 text-sm text-content-secondary group-hover:text-content transition-colors truncate" do %>
+                        class: "flex-1 text-[13px] text-content-secondary group-hover:text-content transition-colors duration-200 truncate" do %>
               <%= task.name %>
             <% end %>
 
@@ -41,9 +41,9 @@
               elsif task.due_date == Date.current
                 "text-status-warning bg-status-warning/10"
               else
-                "text-content-muted bg-bg-elevated"
+                "text-content-muted bg-white/5"
               end %>
-              <span class="flex-shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded <%= due_class %>">
+              <span class="flex-shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-md <%= due_class %>">
                 <% if task.due_date == Date.current %>
                   Today
                 <% elsif task.due_date == Date.tomorrow %>
@@ -56,20 +56,20 @@
 
             <%# Status badge %>
             <% if task.status == "in_progress" %>
-              <span class="flex-shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded text-status-info bg-status-info/10">In Progress</span>
+              <span class="flex-shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-md text-status-info bg-status-info/10">In Progress</span>
             <% end %>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <div class="text-center py-6">
-        <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-bg-elevated mb-2">
-          <svg class="w-5 h-5 text-status-success/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+      <div class="text-center py-8">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/5 mb-3">
+          <svg class="w-6 h-6 text-status-success/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
         </div>
-        <p class="text-sm text-content-muted">No tasks due today</p>
-        <p class="text-xs text-content-muted/60 mt-1">Tasks due today or in progress will appear here</p>
+        <p class="text-sm text-content-muted font-medium">No tasks due today</p>
+        <p class="text-xs text-content-muted/50 mt-1.5 max-w-[200px] mx-auto leading-relaxed">Tasks due today or in progress will appear here</p>
       </div>
     <% end %>
   </div>

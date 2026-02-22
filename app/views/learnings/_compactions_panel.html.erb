@@ -1,16 +1,16 @@
 <% if @compactions.any? %>
   <div class="space-y-3">
     <% @compactions.each do |learning| %>
-      <div id="<%= dom_id(learning) %>" class="bg-bg-surface border border-border rounded-lg p-4">
+      <div id="<%= dom_id(learning) %>" class="glass-card rounded-2xl p-5">
         <div class="flex items-start gap-3">
-          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center">
+          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
             <svg class="w-4 h-4 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
             </svg>
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-1">
-              <h3 class="text-sm font-medium text-content"><%= learning.title %></h3>
+              <h3 class="text-sm font-medium text-content tracking-tight"><%= learning.title %></h3>
               <span class="text-xs text-content-muted"><%= learning.created_at.strftime("%b %-d, %Y at %-I:%M%P") %></span>
             </div>
             <% if learning.body.present? %>
@@ -42,13 +42,13 @@
     <% end %>
   </div>
 <% else %>
-  <div class="text-center py-12">
-    <div class="w-10 h-10 rounded-lg bg-bg-elevated flex items-center justify-center mx-auto mb-3">
-      <svg class="w-5 h-5 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+  <div class="text-center py-8">
+    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
+      <svg class="w-5 h-5 text-content-muted/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
       </svg>
     </div>
-    <p class="text-sm text-content-muted">No compactions yet</p>
-    <p class="text-xs text-content-muted/60 mt-1">Memory compaction events will appear here with before/after token counts</p>
+    <p class="text-sm font-medium text-content-muted">No compactions yet</p>
+    <p class="text-xs text-content-muted/50 mt-1">Memory compaction events will appear here with before/after token counts</p>
   </div>
 <% end %>

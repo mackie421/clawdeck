@@ -15,7 +15,7 @@
   }
 %>
 
-<div class="flex-1 min-w-0 flex flex-col bg-bg-surface rounded-lg border border-border transition-colors"
+<div class="flex-1 min-w-0 flex flex-col glass-surface rounded-xl transition-colors"
      data-controller="inline-add"
      data-inline-add-status-value="<%= status %>"
      data-inline-add-url-value="<%= board_tasks_path(@board) %>"
@@ -23,8 +23,8 @@
   <%# Column Header %>
   <div class="flex items-center gap-2 px-3 py-3">
     <div class="w-2 h-2 rounded-full <%= column_colors[status] %>"></div>
-    <h2 class="text-sm font-semibold text-content font-display"><%= column_labels[status] %></h2>
-    <span id="column-<%= status %>-count" class="ml-auto text-xs text-content-secondary bg-bg-elevated px-1.5 py-0.5 rounded"><%= tasks.count %></span>
+    <h2 class="text-[13px] font-semibold text-content font-display tracking-tight"><%= column_labels[status] %></h2>
+    <span id="column-<%= status %>-count" class="ml-auto text-[11px] text-content-muted bg-white/5 px-1.5 py-0.5 rounded-md font-medium"><%= tasks.count %></span>
   </div>
 
   <%# Tasks List - no overflow, grows with content, min height for empty drop target %>
@@ -41,7 +41,7 @@
 
   <%# Inline Add Card Form (hidden by default) %>
   <div data-inline-add-target="form" class="hidden px-2 py-2">
-    <div class="bg-bg-elevated rounded-lg border border-border p-2">
+    <div class="bg-white/5 rounded-xl border border-white/5 p-2">
       <textarea data-inline-add-target="input"
                 data-action="keydown->inline-add#handleKeydown"
                 placeholder="Enter a title for this card..."
@@ -68,7 +68,7 @@
   <div data-inline-add-target="button" class="px-2 py-2">
     <button type="button"
             data-action="click->inline-add#show"
-            class="w-full flex items-center gap-1 px-2 py-1.5 text-xs text-content-muted hover:text-content hover:bg-bg-hover rounded-md transition-colors cursor-pointer">
+            class="w-full flex items-center gap-1 px-2 py-1.5 text-xs text-content-muted hover:text-content hover:bg-white/5 rounded-md transition-colors cursor-pointer">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>

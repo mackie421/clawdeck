@@ -17,13 +17,13 @@
   <% elsif agent_connected %>
     <%= button_to assign_board_task_path(board, task),
         method: :patch,
-        class: "cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium bg-bg-elevated hover:bg-bg-hover text-content-secondary transition-colors",
+        class: "cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium bg-white/5 hover:bg-bg-hover text-content-secondary transition-colors",
         title: "Assign to #{agent_name}" do %>
       <span><%= agent_emoji %></span>
       <span>Assign</span>
     <% end %>
   <% else %>
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs text-content-muted bg-bg-elevated cursor-not-allowed" title="Connect an agent in Settings">
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs text-content-muted bg-white/5 cursor-not-allowed" title="Connect an agent in Settings">
       <span>🦞</span>
       <span>No agent</span>
     </span>
