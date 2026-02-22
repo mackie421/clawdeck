@@ -96,9 +96,11 @@ class Boards::TasksController < ApplicationController
   end
 
   def task_params
-    permitted = params.require(:task).permit(:name, :title, :description, :priority, :status, :blocked, :due_date, :completed, tags: [])
+    permitted = params.require(:task).permit(:name, :title, :description, :priority, :status, :blocked, :due_date, :completed, :assignee, tags: [])
     # Allow 'title' as alias for 'name'
     permitted[:name] = permitted.delete(:title) if permitted[:title].present? && permitted[:name].blank?
+    # Treat empty string assignee as nil (unassign)
+    permitted[:assignee] = nil if permitted.key?(:assignee) && permitted[:assignee].blank?
     permitted
   end
 end

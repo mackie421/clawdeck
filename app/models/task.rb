@@ -6,9 +6,12 @@ class Task < ApplicationRecord
   enum :priority, { none: 0, low: 1, medium: 2, high: 3 }, default: :none, prefix: true
   enum :status, { inbox: 0, up_next: 1, in_progress: 2, in_review: 3, done: 4 }, default: :inbox
 
+  ASSIGNEES = %w[me agent].freeze
+
   validates :name, presence: true
   validates :priority, inclusion: { in: priorities.keys }
   validates :status, inclusion: { in: statuses.keys }
+  validates :assignee, inclusion: { in: ASSIGNEES }, allow_nil: true
 
   # Activity tracking - must be declared before callbacks that use it
   attr_accessor :activity_source, :actor_name, :actor_emoji, :activity_note
@@ -32,18 +35,31 @@ class Task < ApplicationRecord
   # Order incomplete tasks by position, completed tasks by completion time (most recent first)
   scope :incomplete, -> { where(completed: false).reorder(position: :asc) }
   scope :completed, -> { where(completed: true).reorder(completed_at: :desc) }
-  scope :assigned_to_agent, -> { where(assigned_to_agent: true).reorder(assigned_at: :asc) }
-  scope :unassigned, -> { where(assigned_to_agent: false) }
+  scope :assigned_to_agent, -> { where(assignee: "agent").reorder(assigned_at: :asc) }
+  scope :assigned_to_me, -> { where(assignee: "me") }
+  scope :unassigned, -> { where(assignee: nil) }
   default_scope { order(completed: :asc, position: :asc) }
 
-  # Agent assignment methods
+  # Assignment methods
   def assign_to_agent!
-    update!(assigned_to_agent: true, assigned_at: Time.current)
+    update!(assignee: "agent", assigned_to_agent: true, assigned_at: Time.current)
   end
 
   def unassign_from_agent!
-    update!(assigned_to_agent: false, assigned_at: nil)
+    update!(assignee: nil, assigned_to_agent: false, assigned_at: nil)
   end
+
+  def assigned_to_me?
+    assignee == "me"
+  end
+
+  # Keep backward compat: assigned_to_agent? checks the new field
+  def assigned_to_agent?
+    assignee == "agent"
+  end
+
+  # Sync assignee → assigned_to_agent boolean for API backward compat
+  before_save :sync_assignee_fields
 
   private
 
@@ -61,6 +77,13 @@ class Task < ApplicationRecord
 
   def skip_broadcast?
     @stored_activity_source == "web" || activity_source == "web"
+  end
+
+  def sync_assignee_fields
+    if will_save_change_to_assignee?
+      self.assigned_to_agent = (assignee == "agent")
+      self.assigned_at = assignee.present? ? (assigned_at || Time.current) : nil
+    end
   end
 
   def sync_completed_with_status
