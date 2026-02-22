@@ -38,7 +38,7 @@
             <%= render "application/sidebar" %>
           </div>
         <% end %>
-        <div data-sidebar-target="content" class="relative z-10 flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
+        <div data-sidebar-target="content" class="flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
           <main class="h-full text-content-secondary font-normal text-sm">
             <%= yield %>
           </main>
@@ -56,9 +56,9 @@
                data-action="click->sidebar#close"
                class="hidden fixed inset-0 z-30 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ease-out"></div>
         <% end %>
-        <div data-sidebar-target="content" class="relative z-10 flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
-          <%# Dashboard header bar — refined with subtle glass effect %>
-          <header class="flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 bg-bg-base/60 backdrop-blur-xl border-b border-white/5">
+        <div data-sidebar-target="content" class="flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
+          <%# Dashboard header bar — z-20 keeps dropdown above scroll content %>
+          <header class="relative z-20 flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 bg-bg-base/60 backdrop-blur-xl border-b border-white/5">
             <div class="flex items-center gap-3">
               <%# Mobile hamburger — opens sidebar %>
               <button data-action="click->sidebar#toggle"
