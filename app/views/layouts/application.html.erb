@@ -32,12 +32,13 @@
     <% if @board_page %>
       <%# Board page - sidebar on desktop, full screen on mobile %>
       <div class="h-screen flex flex-col bg-bg-base" data-controller="sidebar">
+        <div class="gradient-mesh" aria-hidden="true"></div>
         <% if authenticated? %>
           <div class="hidden md:block">
             <%= render "application/sidebar" %>
           </div>
         <% end %>
-        <div data-sidebar-target="content" class="flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
+        <div data-sidebar-target="content" class="relative z-10 flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
           <main class="h-full text-content-secondary font-normal text-sm">
             <%= yield %>
           </main>
@@ -46,6 +47,8 @@
     <% elsif @dashboard_page %>
       <%# Dashboard/mission control pages - sidebar + full-width content %>
       <div class="h-screen flex flex-col bg-bg-base" data-controller="sidebar">
+        <%# Ambient gradient mesh — gives glass cards depth and glow %>
+        <div class="gradient-mesh" aria-hidden="true"></div>
         <% if authenticated? %>
           <%= render "application/sidebar" %>
           <%# Mobile overlay for sidebar — frosted backdrop %>
@@ -53,9 +56,9 @@
                data-action="click->sidebar#close"
                class="hidden fixed inset-0 z-30 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ease-out"></div>
         <% end %>
-        <div data-sidebar-target="content" class="flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
+        <div data-sidebar-target="content" class="relative z-10 flex-1 flex flex-col min-h-0 transition-[margin] duration-200 ease-out">
           <%# Dashboard header bar — refined with subtle glass effect %>
-          <header class="flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 bg-bg-base/80 backdrop-blur-xl border-b border-white/5">
+          <header class="flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 bg-bg-base/60 backdrop-blur-xl border-b border-white/5">
             <div class="flex items-center gap-3">
               <%# Mobile hamburger — opens sidebar %>
               <button data-action="click->sidebar#toggle"
@@ -126,6 +129,7 @@
     <% else %>
       <%# Other pages (settings, etc.) - centered content with navbar %>
       <div class="h-screen flex flex-col bg-bg-base">
+        <div class="gradient-mesh" aria-hidden="true"></div>
         <%= render "application/navbar" %>
         <div class="flex-1 overflow-y-auto px-4 pb-8 overscroll-contain [-webkit-overflow-scrolling:touch]">
           <main class="container max-w-lg mx-auto text-content-secondary font-normal text-sm">

@@ -101,26 +101,93 @@
 }
 
 /* ========================================
+   GRADIENT MESH BACKGROUND
+   STACK-inspired ambient glow for depth.
+   Gives glass-card backdrop-blur something
+   to actually blur against.
+   ======================================== */
+.gradient-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Top-left: deep purple bloom */
+    radial-gradient(ellipse 65% 55% at 8% 8%, rgba(124, 58, 237, 0.28), transparent 60%),
+    /* Top-right: teal/cyan glow */
+    radial-gradient(ellipse 55% 50% at 88% 12%, rgba(6, 182, 212, 0.22), transparent 55%),
+    /* Center-left: magenta accent */
+    radial-gradient(ellipse 45% 45% at 3% 55%, rgba(236, 72, 153, 0.18), transparent 50%),
+    /* Bottom-right: emerald glow */
+    radial-gradient(ellipse 55% 50% at 92% 82%, rgba(16, 185, 129, 0.20), transparent 55%),
+    /* Bottom-center: purple wash */
+    radial-gradient(ellipse 70% 45% at 50% 95%, rgba(139, 92, 246, 0.14), transparent 50%),
+    /* Wide ambient: warm purple core */
+    radial-gradient(ellipse 80% 80% at 50% 50%, rgba(124, 58, 237, 0.06), transparent 70%);
+}
+
+/* Animated variant — slow, subtle drift for premium feel */
+.gradient-mesh-animated {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.gradient-mesh-animated::before,
+.gradient-mesh-animated::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: meshDrift 20s ease-in-out infinite alternate;
+}
+
+.gradient-mesh-animated::before {
+  background:
+    radial-gradient(ellipse at 25% 25%, rgba(124, 58, 237, 0.30), transparent 60%),
+    radial-gradient(ellipse at 75% 20%, rgba(6, 182, 212, 0.24), transparent 55%);
+}
+
+.gradient-mesh-animated::after {
+  background:
+    radial-gradient(ellipse at 80% 75%, rgba(16, 185, 129, 0.22), transparent 55%),
+    radial-gradient(ellipse at 15% 70%, rgba(236, 72, 153, 0.18), transparent 50%);
+  animation-delay: -10s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes meshDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(2%, -1%) scale(1.02); }
+  66%  { transform: translate(-1%, 2%) scale(0.98); }
+  100% { transform: translate(1%, -2%) scale(1.01); }
+}
+
+/* ========================================
    GLASS / FROSTED SURFACES
    Apple-style backdrop blur with subtle
    transparency for depth and layering
    ======================================== */
 .glass-card {
-  background: rgba(12, 16, 25, 0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 16, 25, 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow:
-    0 0 0 0.5px rgba(255, 255, 255, 0.03),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.06),
     0 2px 8px rgba(0, 0, 0, 0.3),
     0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .glass-surface {
-  background: rgba(12, 16, 25, 0.5);
-  backdrop-filter: blur(12px) saturate(150%);
-  -webkit-backdrop-filter: blur(12px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(12, 16, 25, 0.45);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .glass-sidebar {
