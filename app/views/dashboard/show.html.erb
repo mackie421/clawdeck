@@ -1,6 +1,18 @@
 <% content_for :title, "Dashboard - clawdeck" %>
 <% content_for :page_title, "Dashboard" %>
 
+<% board = current_user.boards.first %>
+<% if board %>
+  <% content_for :header_actions do %>
+    <%= link_to board_path(board), class: "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-content-secondary bg-bg-surface border border-border rounded-md hover:bg-bg-elevated transition-colors" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" />
+      </svg>
+      Board
+    <% end %>
+  <% end %>
+<% end %>
+
 <div class="p-4 sm:p-6">
   <%# Date + greeting %>
   <div class="mb-4 sm:mb-6">

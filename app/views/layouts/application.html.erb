@@ -68,6 +68,7 @@
               <h1 class="text-lg font-semibold text-content font-display"><%= yield(:page_title).presence || "Dashboard" %></h1>
             </div>
             <div class="flex items-center gap-2">
+              <%= yield(:header_actions) %>
               <%# Agent indicator %>
               <% if authenticated? && current_user.agent_last_active_at.present? %>
                 <div class="relative cursor-default" title="<%= current_user.agent_name || 'Agent' %> • Last active: <%= time_ago_in_words(current_user.agent_last_active_at) %> ago">
