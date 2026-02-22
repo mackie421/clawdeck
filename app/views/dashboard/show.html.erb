@@ -1,37 +1,57 @@
 <% content_for :title, "Dashboard - clawdeck" %>
 <% content_for :page_title, "Dashboard" %>
 
-<div class="p-6">
+<div class="p-4 sm:p-6">
   <%# Date + greeting %>
-  <div class="mb-6">
+  <div class="mb-4 sm:mb-6">
     <p class="text-xs text-content-muted"><%= Date.current.strftime("%A, %B %-d") %></p>
   </div>
 
   <%# Widget grid: 2 columns on desktop, stacked on mobile %>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
     <%# Left column %>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-3 sm:gap-4">
       <%= turbo_frame_tag "agenda_widget" do %>
-        <%= render "dashboard/agenda_widget" %>
+        <% begin %>
+          <%= render "dashboard/agenda_widget" %>
+        <% rescue => e %>
+          <%= render "shared/widget_error", title: "Agenda" %>
+        <% end %>
       <% end %>
 
       <%= turbo_frame_tag "priority_widget" do %>
-        <%= render "dashboard/priority_widget" %>
+        <% begin %>
+          <%= render "dashboard/priority_widget" %>
+        <% rescue => e %>
+          <%= render "shared/widget_error", title: "Priority Queue" %>
+        <% end %>
       <% end %>
 
       <%= turbo_frame_tag "agent_status_widget" do %>
-        <%= render "dashboard/agent_status_widget" %>
+        <% begin %>
+          <%= render "dashboard/agent_status_widget" %>
+        <% rescue => e %>
+          <%= render "shared/widget_error", title: "Agent Status" %>
+        <% end %>
       <% end %>
     </div>
 
     <%# Right column %>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-3 sm:gap-4">
       <%= turbo_frame_tag "progress_widget" do %>
-        <%= render "dashboard/progress_widget" %>
+        <% begin %>
+          <%= render "dashboard/progress_widget" %>
+        <% rescue => e %>
+          <%= render "shared/widget_error", title: "Progress" %>
+        <% end %>
       <% end %>
 
       <%= turbo_frame_tag "digest_widget" do %>
-        <%= render "dashboard/digest_widget" %>
+        <% begin %>
+          <%= render "dashboard/digest_widget" %>
+        <% rescue => e %>
+          <%= render "shared/widget_error", title: "Overnight Digest" %>
+        <% end %>
       <% end %>
     </div>
   </div>

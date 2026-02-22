@@ -1,20 +1,20 @@
 <% content_for :title, "Analytics - clawdeck" %>
 <% content_for :page_title, "Analytics" %>
 
-<div class="p-6" data-controller="analytics">
+<div class="p-4 sm:p-6" data-controller="analytics">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-6 border-b border-border">
-    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border" role="tablist" aria-label="Analytics">
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="overview"
             class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
       Overview
     </button>
-    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="charts"
             class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
       Charts
     </button>
-    <button data-analytics-target="tab" data-action="click->analytics#switchTab"
+    <button data-analytics-target="tab" data-action="click->analytics#switchTab keydown->analytics#keydown"
             data-tab="reports"
             class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
       Reports

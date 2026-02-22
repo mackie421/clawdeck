@@ -1,20 +1,21 @@
 <%# Sidebar navigation — icon-only (48px) collapsed, expanded shows labels %>
 <%# Rendered inside the sidebar controller wrapper in application layout %>
 
-<aside data-sidebar-target="sidebar"
+<aside data-sidebar-target="sidebar" aria-label="Main navigation"
        class="fixed top-0 left-0 bottom-0 z-40 w-12 bg-bg-surface border-r border-border flex flex-col transition-transform duration-200 ease-out">
 
   <%# Logo / toggle button %>
   <div class="flex items-center justify-center h-12 border-b border-border flex-shrink-0">
     <button data-action="click->sidebar#toggle"
             class="flex items-center justify-center w-8 h-8 rounded-md hover:bg-bg-elevated transition-colors cursor-pointer"
-            title="Toggle sidebar">
+            title="Toggle sidebar"
+            aria-label="Toggle sidebar">
       <%= image_tag "clawdecklogo.svg", alt: "ClawDeck", class: "h-5 w-auto" %>
     </button>
   </div>
 
   <%# Navigation links %>
-  <nav class="flex-1 flex flex-col gap-1 px-1.5 py-3 overflow-y-auto">
+  <nav class="flex-1 flex flex-col gap-1 px-1.5 py-3 overflow-y-auto" aria-label="Main">
     <%= sidebar_link "Dashboard", dashboard_path, "dashboard", active: current_page?(dashboard_path) do %>
       <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z" />

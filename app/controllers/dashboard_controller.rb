@@ -11,11 +11,19 @@ class DashboardController < ApplicationController
       .reorder(priority: :desc, due_date: :asc)
       .limit(10)
 
-    # Progress: completion stats
-    @done_today = @all_tasks.where(status: :done, completed_at: Date.current.all_day).count
-    @done_this_week = @all_tasks.where(status: :done, completed_at: Date.current.beginning_of_week..Date.current.end_of_day).count
-    @total_open = @all_tasks.where.not(status: :done).count
-    @completion_streak = calculate_streak
+    # Progress: completion stats (cached 5 min — these run multiple COUNT queries)
+    progress = Rails.cache.fetch("dashboard/progress/#{current_user.id}/#{Date.current}", expires_in: 5.minutes) do
+      {
+        done_today: @all_tasks.where(status: :done, completed_at: Date.current.all_day).count,
+        done_this_week: @all_tasks.where(status: :done, completed_at: Date.current.beginning_of_week..Date.current.end_of_day).count,
+        total_open: @all_tasks.where.not(status: :done).count,
+        streak: calculate_streak
+      }
+    end
+    @done_today = progress[:done_today]
+    @done_this_week = progress[:done_this_week]
+    @total_open = progress[:total_open]
+    @completion_streak = progress[:streak]
 
     # Priority Queue: top 5 high-priority tasks across all boards
     @priority_tasks = @all_tasks

@@ -2,6 +2,10 @@
 <div class="max-w-lg">
   <h3 class="text-sm font-medium text-content-secondary mb-3">Monthly Budget Alert</h3>
 
+  <% if @total_entries == 0 %>
+    <%= render "shared/empty_state", icon: "dollar", title: "No cost data yet", subtitle: "Budget tracking will activate once cost entries are recorded via the API." %>
+  <% end %>
+
   <div class="bg-bg-surface border border-border rounded-lg p-4 mb-4">
     <p class="text-xs text-content-muted uppercase tracking-wide mb-2">Current Month Spend</p>
     <p class="text-3xl font-semibold text-content">$<%= sprintf("%.4f", @month_total) %></p>

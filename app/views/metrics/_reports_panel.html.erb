@@ -1,4 +1,8 @@
 <%# Reports: aggregated metric summaries %>
+<% if @social_metrics.empty? && @content_metrics.empty? && @business_metrics.empty? %>
+  <%= render "shared/empty_state", icon: "chart", title: "No metrics recorded yet", subtitle: "Metrics from Larry Analytics will populate these reports as data is collected." %>
+<% end %>
+
 <div class="space-y-4">
   <%# Social metrics %>
   <div class="bg-bg-surface border border-border rounded-lg p-4">

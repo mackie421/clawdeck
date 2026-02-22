@@ -1,22 +1,22 @@
 <% content_for :title, "Cost Tracker - clawdeck" %>
 <% content_for :page_title, "Cost Tracker" %>
 
-<div class="p-6" data-controller="costs">
+<div class="p-4 sm:p-6" data-controller="costs">
   <%# Tab navigation %>
-  <div class="flex items-center gap-1 mb-6 border-b border-border">
-    <button data-costs-target="tab" data-action="click->costs#switchTab"
+  <div class="flex items-center gap-1 mb-4 sm:mb-6 border-b border-border" role="tablist" aria-label="Cost Tracker">
+    <button data-costs-target="tab" data-action="click->costs#switchTab keydown->costs#keydown"
             data-tab="spend"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content">
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-accent text-content whitespace-nowrap">
       Spend Overview
     </button>
-    <button data-costs-target="tab" data-action="click->costs#switchTab"
+    <button data-costs-target="tab" data-action="click->costs#switchTab keydown->costs#keydown"
             data-tab="history"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Daily History
     </button>
-    <button data-costs-target="tab" data-action="click->costs#switchTab"
+    <button data-costs-target="tab" data-action="click->costs#switchTab keydown->costs#keydown"
             data-tab="budget"
-            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary">
+            class="px-3 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer border-transparent text-content-muted hover:text-content-secondary whitespace-nowrap">
       Budget
     </button>
   </div>

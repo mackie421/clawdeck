@@ -1,0 +1,17 @@
+<%# Loading skeleton for Turbo Frame widgets %>
+<%# Usage: render "shared/skeleton_widget", lines: 3 %>
+<% lines ||= 3 %>
+<div class="bg-bg-surface border border-border rounded-lg animate-shimmer">
+  <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+    <div class="h-4 w-24 bg-bg-elevated rounded"></div>
+    <div class="h-3 w-12 bg-bg-elevated rounded"></div>
+  </div>
+  <div class="p-4 flex flex-col gap-3">
+    <% lines.times do |i| %>
+      <div class="flex items-center gap-3">
+        <div class="w-1.5 h-1.5 rounded-full bg-bg-elevated flex-shrink-0"></div>
+        <div class="h-3 bg-bg-elevated rounded" style="width: <%= [85, 70, 60, 75, 55][i % 5] %>%"></div>
+      </div>
+    <% end %>
+  </div>
+</div>

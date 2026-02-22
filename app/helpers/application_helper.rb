@@ -15,6 +15,7 @@ module ApplicationHelper
       link_to(path,
         class: "group flex items-center rounded-md transition-colors #{active ? 'bg-bg-elevated text-accent' : 'text-content-secondary hover:bg-bg-elevated hover:text-content'}",
         title: label,
+        aria: { label: label, current: (active ? "page" : nil) },
         data: { turbo_frame: "_top" }
       ) do
         content_tag(:div, icon_html, class: "flex items-center justify-center w-9 h-9")
